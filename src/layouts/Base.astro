@@ -23,11 +23,11 @@ const englishRoute = new URL('/en/' + suffix, Astro.site);
     {garden && <script is:inline>
       // Resolve the first paint before the deferred application can run.
       const gardenRoot = document.documentElement;
-      let gardenQuiet = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let gardenQuiet = false;
       try {
         const saved = localStorage.getItem('codesentry:motion:v1');
         if (saved === 'quiet' || saved === 'animated') gardenQuiet = saved === 'quiet';
-      } catch { /* The system preference still works without storage. */ }
+      } catch { /* Motion stays enabled when storage is unavailable. */ }
       gardenRoot.classList.add('js');
       gardenRoot.dataset.loader = 'pending';
       gardenRoot.classList.toggle('quiet', gardenQuiet);
