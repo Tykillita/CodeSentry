@@ -81,6 +81,12 @@ function spaced(context:CanvasRenderingContext2D,value:string) {
   const target=context as CanvasRenderingContext2D&{letterSpacing?:string};
   if('letterSpacing' in target)target.letterSpacing=value;
 }
+function drawArrowUpRight(context:CanvasRenderingContext2D,x:number,baseline:number,size:number,scale:number) {
+  context.save();context.lineWidth=1.7*scale;context.lineCap='round';context.lineJoin='round';context.beginPath();
+  context.moveTo(x,baseline);context.lineTo(x+size,baseline-size);
+  context.moveTo(x+size*.48,baseline-size);context.lineTo(x+size,baseline-size);context.lineTo(x+size,baseline-size*.48);
+  context.stroke();context.restore();
+}
 
 function hanko(mark:string,size:number,seed:number) {
   const {canvas,context}=surface(Math.ceil(size*1.3),Math.ceil(size*1.3));const random=randomSource(seed);
@@ -162,7 +168,9 @@ export function paintParchment(canvas:HTMLCanvasElement,content:ParchmentContent
   context.drawImage(stamp,width-margin-seal*1.12,footY-seal*.98,stamp.width,stamp.height);
   context.strokeStyle='rgba(37,49,54,.14)';context.lineWidth=2*s;context.beginPath();context.moveTo(margin,footY-34*s);context.lineTo(width-margin-seal*1.35,footY-34*s);context.stroke();
   context.fillStyle='#a74a2f';context.font=`400 ${25*s}px ${MONO}`;spaced(context,`${1.2*s}px`);
-  context.fillText(ellipsize(context,`${content.cta} ↗`,inner-seal*1.45),margin,footY+4*s);spaced(context,'0px');
+  const cta=ellipsize(context,content.cta,inner-seal*1.45-26*s),ctaBaseline=footY+4*s;
+  context.fillText(cta,margin,ctaBaseline);context.strokeStyle='#a74a2f';
+  drawArrowUpRight(context,margin+context.measureText(cta).width+9*s,ctaBaseline-2*s,17*s,s);spaced(context,'0px');
   // Flow steps, from the bottom up so the illustration takes the remaining room.
   const steps=layout.compact?[]:content.flow.slice(0,5);
   const flowBottom=footY-seal*.98-26*s;let rowHeight=66*s;
@@ -314,7 +322,9 @@ export function paintMakimono(canvas:HTMLCanvasElement,content:ParchmentContent&
   const seal=118*s,stamp=hanko(content.areaMark,seal,content.order*977);
   context.drawImage(stamp,inner.x+inner.w-pad-stamp.width*.95,inner.y+inner.h-pad-stamp.height*.9);
   context.fillStyle='#a74a2f';context.font=`400 ${22*s}px ${MONO}`;spaced(context,`${1.2*s}px`);
-  context.fillText(`${content.cta} ↗`,three.x,inner.y+inner.h-pad-20*s);spaced(context,'0px');
+  const cta=ellipsize(context,content.cta,three.w-27*s),ctaBaseline=inner.y+inner.h-pad-20*s;
+  context.fillText(cta,three.x,ctaBaseline);context.strokeStyle='#a74a2f';
+  drawArrowUpRight(context,three.x+context.measureText(cta).width+9*s,ctaBaseline-2*s,17*s,s);spaced(context,'0px');
 }
 
 /** Rasterises the page's inline project SVG so the scroll and the HTML fallback share one drawing. */

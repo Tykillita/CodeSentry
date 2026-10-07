@@ -1,7 +1,7 @@
 const initialQuiet=typeof document!=='undefined'&&document.documentElement.classList.contains('quiet');
 export type JourneyMode='garden'|'studio';
 export const journey = { progress:0, activePanel:0, activeSlug:'', closingSlug:'', quiet:initialQuiet, paused:false, hidden:false,
-  /** garden strips or the studio table; `studio` runs 0→1 while the camera walks into the house. */
+  /** garden strips or the studio table; `studio` runs from 0 to 1 while the camera walks into the house. */
   mode:'garden' as JourneyMode, studio:0, hoverSlug:'' };
 const listeners=new Set<()=>void>();
 const metaListeners=new Set<()=>void>();

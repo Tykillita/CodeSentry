@@ -1,5 +1,6 @@
 ---
 import '../styles/policies.css';
+import ArrowIcon from './ArrowIcon.astro';
 import Base from '../layouts/Base.astro';
 import type { Locale } from '../data/ui';
 
@@ -33,7 +34,7 @@ const pageHeading = kind === 'privacy'
         <span>CodeSentry<small>DIGITAL GARDEN</small></span>
       </a>
       <nav class="policy-navigation" aria-label={english ? 'Page navigation' : 'Navegación de página'}>
-        <a href={`/${locale}/`}>{english ? 'Garden' : 'Jardín'} <span aria-hidden="true">↗</span></a>
+        <a href={`/${locale}/`}>{english ? 'Garden' : 'Jardín'} <ArrowIcon /></a>
         <a class="policy-language" href={`/${otherLocale}/${kind}/`} lang={otherLocale}>
           {english ? 'Leer en español' : 'Read in English'}
         </a>
@@ -75,7 +76,7 @@ const pageHeading = kind === 'privacy'
             </section>
             <section>
               <h2>Contact</h2>
-              <p>For questions about this policy or Hikari’s handling of information, contact CodeSentry through its <a href="https://www.linkedin.com/company/gocodesentry/" target="_blank" rel="noopener noreferrer">LinkedIn company page<span aria-hidden="true"> ↗</span></a>.</p>
+              <p>For questions about this policy or Hikari’s handling of information, contact CodeSentry through its <a href="https://www.linkedin.com/company/gocodesentry/" target="_blank" rel="noopener noreferrer">LinkedIn company page <ArrowIcon /></a>.</p>
             </section>
           </> : <>
             <section>
@@ -100,7 +101,7 @@ const pageHeading = kind === 'privacy'
             </section>
             <section>
               <h2>Contacto</h2>
-              <p>Para consultas sobre esta política o el tratamiento de información de Hikari, contacta a CodeSentry desde su <a href="https://www.linkedin.com/company/gocodesentry/" target="_blank" rel="noopener noreferrer">página empresarial de LinkedIn<span aria-hidden="true"> ↗</span></a>.</p>
+              <p>Para consultas sobre esta política o el tratamiento de información de Hikari, contacta a CodeSentry desde su <a href="https://www.linkedin.com/company/gocodesentry/" target="_blank" rel="noopener noreferrer">página empresarial de LinkedIn <ArrowIcon /></a>.</p>
             </section>
           </>}
         </>
@@ -118,7 +119,7 @@ const pageHeading = kind === 'privacy'
             </section>
             <section>
               <h2>Report a vulnerability privately</h2>
-              <p>Use <a href="https://github.com/Tykillita/CodeSentry/security/advisories/new" target="_blank" rel="noopener noreferrer">GitHub private vulnerability reporting<span aria-hidden="true"> ↗</span></a> to contact the maintainers. Please do not publish vulnerability details in issues, pull requests, or discussions before coordinated disclosure.</p>
+              <p>Use <a href="https://github.com/Tykillita/CodeSentry/security/advisories/new" target="_blank" rel="noopener noreferrer">GitHub private vulnerability reporting <ArrowIcon /></a> to contact the maintainers. Please do not publish vulnerability details in issues, pull requests, or discussions before coordinated disclosure.</p>
               <p>Include the affected page, file, dependency, or commit; clear reproduction steps or a minimal proof of concept; the impact you observed; and any relevant browser or operating-system details. Do not include real credentials, private user data, or information belonging to other people. Avoid testing against systems or data you do not own.</p>
               <p>Reports are reviewed on a best-effort basis; there is no guaranteed response or fix deadline. Coordinate any public disclosure with the maintainers and keep exploit details private until a disclosure date has been agreed.</p>
             </section>
@@ -129,7 +130,7 @@ const pageHeading = kind === 'privacy'
             </section>
             <section>
               <h2>Reportar una vulnerabilidad de forma privada</h2>
-              <p>Usa el <a href="https://github.com/Tykillita/CodeSentry/security/advisories/new" target="_blank" rel="noopener noreferrer">canal privado de reportes de vulnerabilidad de GitHub<span aria-hidden="true"> ↗</span></a> para contactar a quienes mantienen el proyecto. No publiques detalles de la vulnerabilidad en issues, pull requests ni discusiones antes de coordinar su divulgación.</p>
+              <p>Usa el <a href="https://github.com/Tykillita/CodeSentry/security/advisories/new" target="_blank" rel="noopener noreferrer">canal privado de reportes de vulnerabilidad de GitHub <ArrowIcon /></a> para contactar a quienes mantienen el proyecto. No publiques detalles de la vulnerabilidad en issues, pull requests ni discusiones antes de coordinar su divulgación.</p>
               <p>Incluye la página, archivo, dependencia o commit afectado; pasos claros para reproducir el problema o una prueba de concepto mínima; el impacto observado; y los datos pertinentes del navegador o sistema operativo. No incluyas credenciales reales, datos privados de usuarios ni información de otras personas. Evita probar sistemas o datos que no te pertenezcan.</p>
               <p>Los reportes se revisan según disponibilidad; no se garantiza un plazo de respuesta ni de corrección. Coordina cualquier divulgación pública con quienes mantienen el proyecto y conserva privados los detalles de explotación hasta acordar una fecha para divulgarla.</p>
             </section>
@@ -139,7 +140,7 @@ const pageHeading = kind === 'privacy'
 
       <footer class="policy-footer">
         <span>{english ? 'CodeSentry · Security and privacy' : 'CodeSentry · Seguridad y privacidad'}</span>
-        <a href={`/${locale}/`}>{english ? 'Return to the garden' : 'Volver al jardín'} <span aria-hidden="true">↑</span></a>
+        <a href={`/${locale}/`}>{english ? 'Return to the garden' : 'Volver al jardín'} <ArrowIcon direction="up" /></a>
       </footer>
     </article>
   </main>

@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import ArrowIcon from './ArrowIcon.astro';
 import { ui, areas, type Locale } from '../data/ui';
 interface Props { project: CollectionEntry<'projects'>['data']; locale: Locale; }
 const { project: p, locale } = Astro.props; const t = ui[locale]; const c = p[locale];
@@ -7,7 +8,7 @@ const { project: p, locale } = Astro.props; const t = ui[locale]; const c = p[lo
 <div data-detail-content>
   <p class="eyebrow">{areas[p.area][locale]} <span class="detail-number">{String(p.order).padStart(2,'0')} / 16</span></p>
   <h2 class="detail-title">{c.title}</h2><p class="detail-subtitle">{c.subtitle}</p>
-  <div class="detail-links">{p.links.map(link => <a class="text-link" href={link.url} target="_blank" rel="noopener noreferrer">{t[link.type]} <span aria-hidden="true">↗</span></a>)}</div>
+  <div class="detail-links">{p.links.map(link => <a class="text-link" href={link.url} target="_blank" rel="noopener noreferrer">{t[link.type]} <ArrowIcon /></a>)}</div>
   <section><h3>{t.context}</h3><p>{c.context}</p></section>
   <section><h3>{t.features}</h3><ul class="feature-list">{c.features.map(f=><li>{f}</li>)}</ul></section>
   <section><h3>{t.flow}</h3><ol class="flow-list">{c.flow.map(f=><li>{f}</li>)}</ol></section>

@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
 import {ui} from '../data/ui';
 ---
-<Base locale="es" title="404 — CodeSentry"><main class="not-found"><span class="eyebrow">CODESENTRY / 404</span><h1>{ui.es.notFound}</h1><p>{ui.es.notFoundText}</p><a class="paper-button primary" href="/es/">{ui.es.return} →</a><a class="text-link" href="/en/">English ↗</a></main></Base>
+<Base locale="es" title="404 — CodeSentry"><main class="not-found"><span class="eyebrow">CODESENTRY / 404</span><h1>{ui.es.notFound}</h1><p>{ui.es.notFoundText}</p><a class="paper-button primary" href="/es/">{ui.es.return}<ArrowIcon direction="right" /></a><a class="text-link" href="/en/">English <ArrowIcon /></a></main></Base>
