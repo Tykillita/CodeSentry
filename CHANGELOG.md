@@ -4,6 +4,11 @@ Notable changes to CodeSentry. The site is continuously deployed from main; SemV
 
 ## [Unreleased]
 
+### Privacy and security pages / Páginas de privacidad y seguridad
+
+- Added Hikari privacy pages and a parchment policy dialog linking to LinkedIn and GitHub security information in both languages. / Se añadieron páginas de privacidad de Hikari y un diálogo de políticas en papiro con enlaces a LinkedIn y la seguridad de GitHub en ambos idiomas.
+
+
 ### Documentation and security / Documentación y seguridad
 
 - Expanded both READMEs with project, development, versioning, and deployment guidance. / Se ampliaron ambos README con información del proyecto, desarrollo, versionado y despliegue.

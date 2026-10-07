@@ -1,0 +1,146 @@
+---
+import '../styles/policies.css';
+import Base from '../layouts/Base.astro';
+import type { Locale } from '../data/ui';
+
+interface Props {
+  locale: Locale;
+  kind: 'privacy' | 'security';
+}
+
+const { locale, kind } = Astro.props;
+const english = locale === 'en';
+const otherLocale = english ? 'es' : 'en';
+const title = kind === 'privacy'
+  ? (english ? 'Hikari privacy policy | CodeSentry' : 'Política de privacidad de Hikari | CodeSentry')
+  : (english ? 'Security policy | CodeSentry' : 'Política de seguridad | CodeSentry');
+const description = kind === 'privacy'
+  ? (english
+    ? 'How Hikari handles LinkedIn authorization, user-provided content, storage, approval, and deletion.'
+    : 'Cómo Hikari trata la autorización de LinkedIn, el contenido aportado, el almacenamiento, la aprobación y la eliminación.')
+  : (english
+    ? 'CodeSentry security support and private vulnerability disclosure policy.'
+    : 'Soporte de seguridad de CodeSentry y política de divulgación privada de vulnerabilidades.');
+const pageHeading = kind === 'privacy'
+  ? (english ? 'Hikari privacy policy' : 'Política de privacidad de Hikari')
+  : (english ? 'Security policy' : 'Política de seguridad');
+---
+<Base locale={locale} title={title} description={description} canonicalPath={`/${locale}/${kind}/`}>
+  <main class="policy-page">
+    <header class="policy-header">
+      <a class="policy-brand" href={`/${locale}/`} aria-label={english ? 'CodeSentry garden home' : 'Inicio del jardín CodeSentry'}>
+        <span class="brand-seal" aria-hidden="true">守</span>
+        <span>CodeSentry<small>DIGITAL GARDEN</small></span>
+      </a>
+      <nav class="policy-navigation" aria-label={english ? 'Page navigation' : 'Navegación de página'}>
+        <a href={`/${locale}/`}>{english ? 'Garden' : 'Jardín'} <span aria-hidden="true">↗</span></a>
+        <a class="policy-language" href={`/${otherLocale}/${kind}/`} lang={otherLocale}>
+          {english ? 'Leer en español' : 'Read in English'}
+        </a>
+      </nav>
+    </header>
+
+    <article class="policy-document" aria-labelledby="policy-title">
+      <p class="policy-kicker">CODESENTRY <span aria-hidden="true">/</span> {kind === 'privacy' ? 'HIKARI' : (english ? 'SECURITY' : 'SEGURIDAD')}</p>
+      <h1 id="policy-title">{pageHeading}</h1>
+
+      {kind === 'privacy' ? (
+        <>
+          <p class="policy-lede">
+            {english
+              ? 'Hikari is a personal assistant for preparing and carrying out LinkedIn actions that you choose. You stay in control of the information you provide and every write made through your account.'
+              : 'Hikari es un asistente personal para preparar y realizar acciones de LinkedIn que tú eliges. Mantienes el control de la información que aportas y de cada escritura realizada desde tu cuenta.'}
+          </p>
+
+          {english ? <>
+            <section>
+              <h2>Information and purpose</h2>
+              <p>Hikari uses the LinkedIn authorization token and the material you provide for a requested action, such as post text, a post identifier, or the comment and context you select. This information is used to authenticate the requested operation, prepare it for your review, and carry it out only after your approval.</p>
+            </section>
+            <section>
+              <h2>Actions and access</h2>
+              <p>Hikari uses LinkedIn’s official API for the specific publishing or response action you request. Each write requires your individual approval before it is sent. Hikari does not use the API to read your profile, feed, activity, or messages; it does not scrape LinkedIn; and it does not send direct messages.</p>
+            </section>
+            <section>
+              <h2>Storage and retention</h2>
+              <p>The LinkedIn token is stored on your device in credential storage protected by its operating system. Hikari does not send that token to a CodeSentry server. This policy does not claim that every other piece of information stays on your device: if you enter text in an external assistance service, that service may process or retain it under its own privacy terms and controls.</p>
+            </section>
+            <section>
+              <h2>Sharing</h2>
+              <p>After you approve an action, the content and identifiers needed for it are sent to LinkedIn through its API and may become visible according to your LinkedIn settings. CodeSentry does not receive the content through a Hikari backend. The CodeSentry website does not add analytics or advertising trackers.</p>
+            </section>
+            <section>
+              <h2>Your choices and deletion</h2>
+              <p>You can revoke Hikari’s LinkedIn authorization from your LinkedIn account settings. You can remove the saved token by deleting Hikari’s credential from your device’s protected credential storage. Content already published can be managed or deleted in LinkedIn. Any information entered in an external assistance service is subject to that service’s own controls and retention practices.</p>
+            </section>
+            <section>
+              <h2>Contact</h2>
+              <p>For questions about this policy or Hikari’s handling of information, contact CodeSentry through its <a href="https://www.linkedin.com/company/gocodesentry/" target="_blank" rel="noopener noreferrer">LinkedIn company page<span aria-hidden="true"> ↗</span></a>.</p>
+            </section>
+          </> : <>
+            <section>
+              <h2>Información y finalidad</h2>
+              <p>Hikari usa el token de autorización de LinkedIn y el material que aportas para una acción solicitada, como el texto de una publicación, su identificador o el comentario y contexto que seleccionas. La información sirve para autenticar la operación solicitada, prepararla para tu revisión y realizarla solo después de tu aprobación.</p>
+            </section>
+            <section>
+              <h2>Acciones y acceso</h2>
+              <p>Hikari usa la API oficial de LinkedIn para la publicación o respuesta específica que solicitas. Cada escritura requiere tu aprobación individual antes de enviarse. Hikari no usa la API para leer tu perfil, feed, actividad ni mensajes; no extrae información de LinkedIn mediante scraping; y no envía mensajes directos.</p>
+            </section>
+            <section>
+              <h2>Almacenamiento y conservación</h2>
+              <p>El token de LinkedIn se guarda en tu dispositivo, en un almacén de credenciales protegido por su sistema operativo. Hikari no envía ese token a un servidor de CodeSentry. Esta política no afirma que toda otra información permanezca en el dispositivo: si introduces texto en un servicio externo de asistencia, ese servicio puede procesarlo o conservarlo conforme a sus propias condiciones y controles de privacidad.</p>
+            </section>
+            <section>
+              <h2>Comunicación de datos</h2>
+              <p>Después de que apruebas una acción, el contenido y los identificadores necesarios se envían a LinkedIn mediante su API y pueden hacerse visibles según tu configuración de LinkedIn. CodeSentry no recibe el contenido mediante un backend de Hikari. La web de CodeSentry no incorpora analítica ni rastreadores publicitarios.</p>
+            </section>
+            <section>
+              <h2>Tus opciones y eliminación</h2>
+              <p>Puedes revocar la autorización de Hikari desde la configuración de tu cuenta de LinkedIn. Puedes eliminar el token guardado borrando la credencial de Hikari del almacén protegido de tu dispositivo. El contenido ya publicado se administra o elimina en LinkedIn. La información introducida en un servicio externo de asistencia queda sujeta a sus propios controles y prácticas de conservación.</p>
+            </section>
+            <section>
+              <h2>Contacto</h2>
+              <p>Para consultas sobre esta política o el tratamiento de información de Hikari, contacta a CodeSentry desde su <a href="https://www.linkedin.com/company/gocodesentry/" target="_blank" rel="noopener noreferrer">página empresarial de LinkedIn<span aria-hidden="true"> ↗</span></a>.</p>
+            </section>
+          </>}
+        </>
+      ) : (
+        <>
+          <p class="policy-lede">
+            {english
+              ? 'CodeSentry is a continuously deployed website. Security reports are handled privately so maintainers can assess and coordinate a responsible disclosure.'
+              : 'CodeSentry es un sitio web con publicación continua. Los reportes de seguridad se gestionan de forma privada para que quienes mantienen el proyecto puedan evaluarlos y coordinar una divulgación responsable.'}
+          </p>
+          {english ? <>
+            <section>
+              <h2>Supported versions</h2>
+              <p>Security fixes target the current source on <code>main</code> and the live deployment produced from it. Older revisions are not maintained separately.</p>
+            </section>
+            <section>
+              <h2>Report a vulnerability privately</h2>
+              <p>Use <a href="https://github.com/Tykillita/CodeSentry/security/advisories/new" target="_blank" rel="noopener noreferrer">GitHub private vulnerability reporting<span aria-hidden="true"> ↗</span></a> to contact the maintainers. Please do not publish vulnerability details in issues, pull requests, or discussions before coordinated disclosure.</p>
+              <p>Include the affected page, file, dependency, or commit; clear reproduction steps or a minimal proof of concept; the impact you observed; and any relevant browser or operating-system details. Do not include real credentials, private user data, or information belonging to other people. Avoid testing against systems or data you do not own.</p>
+              <p>Reports are reviewed on a best-effort basis; there is no guaranteed response or fix deadline. Coordinate any public disclosure with the maintainers and keep exploit details private until a disclosure date has been agreed.</p>
+            </section>
+          </> : <>
+            <section>
+              <h2>Versiones con soporte</h2>
+              <p>Las correcciones de seguridad se aplican al código vigente en <code>main</code> y al despliegue live generado desde esa rama. Las revisiones anteriores no reciben mantenimiento por separado.</p>
+            </section>
+            <section>
+              <h2>Reportar una vulnerabilidad de forma privada</h2>
+              <p>Usa el <a href="https://github.com/Tykillita/CodeSentry/security/advisories/new" target="_blank" rel="noopener noreferrer">canal privado de reportes de vulnerabilidad de GitHub<span aria-hidden="true"> ↗</span></a> para contactar a quienes mantienen el proyecto. No publiques detalles de la vulnerabilidad en issues, pull requests ni discusiones antes de coordinar su divulgación.</p>
+              <p>Incluye la página, archivo, dependencia o commit afectado; pasos claros para reproducir el problema o una prueba de concepto mínima; el impacto observado; y los datos pertinentes del navegador o sistema operativo. No incluyas credenciales reales, datos privados de usuarios ni información de otras personas. Evita probar sistemas o datos que no te pertenezcan.</p>
+              <p>Los reportes se revisan según disponibilidad; no se garantiza un plazo de respuesta ni de corrección. Coordina cualquier divulgación pública con quienes mantienen el proyecto y conserva privados los detalles de explotación hasta acordar una fecha para divulgarla.</p>
+            </section>
+          </>}
+        </>
+      )}
+
+      <footer class="policy-footer">
+        <span>{english ? 'CodeSentry · Security and privacy' : 'CodeSentry · Seguridad y privacidad'}</span>
+        <a href={`/${locale}/`}>{english ? 'Return to the garden' : 'Volver al jardín'} <span aria-hidden="true">↑</span></a>
+      </footer>
+    </article>
+  </main>
+</Base>
