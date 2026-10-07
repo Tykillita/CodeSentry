@@ -17,7 +17,7 @@
 
 <br>
 
-<a href="https://gocodesentry.web.app"><img src="public/media/garden/social.png" width="720" alt="Imagen de marca del jardín digital CodeSentry"></a>
+<a href="https://gocodesentry.web.app"><img src="public/media/garden/social.png?v=3" width="720" alt="Imagen de marca del jardín digital CodeSentry"></a>
 
 <p><a href="https://gocodesentry.web.app">Abrir el jardín</a> &bull; <a href="#caracteristicas">Características</a> &bull; <a href="#ejecutar-localmente">Ejecutar localmente</a> &bull; <a href="#privacidad-y-accesibilidad">Privacidad y accesibilidad</a> &bull; <a href="#versionado-y-pull-requests">Versionado</a> &bull; <a href="SECURITY.md">Política de seguridad</a></p>
 
