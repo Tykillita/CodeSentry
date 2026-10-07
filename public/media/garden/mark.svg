@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="CodeSentry">
+  <rect x="5" y="5" width="54" height="54" fill="#D95C34" transform="rotate(-2 32 32)" />
+  <rect x="9" y="9" width="46" height="46" fill="none" stroke="#FFF9EF" stroke-opacity=".72" stroke-width="1.5" transform="rotate(-2 32 32)" />
+  <text x="32" y="46" text-anchor="middle" font-family="'Noto Serif JP', serif" font-size="37" fill="#FFF9EF">守</text>
+</svg>

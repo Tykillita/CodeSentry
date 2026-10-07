@@ -1,0 +1,37 @@
+---
+import { projectSealMarks, projectSealNames } from '../data/project-seals';
+interface Props { slug: string; name: string; }
+const { slug, name } = Astro.props;
+const mark = projectSealMarks[slug];
+const lines = projectSealNames[slug] ?? [name];
+const filterId = `seal-engraving-${slug}`;
+const matrix = mark?.mode === 'tone'
+  ? '.064 .215 .022 0 .20 .021 .072 .007 0 .018 .015 .05 .005 0 .016 0 0 0 1 0'
+  : '0 0 0 0 .29 0 0 0 0 .025 0 0 0 0 .02 0 0 0 1 0';
+---
+{slug === 'istargetsleeping' ?
+  <img class="project-paper-seal" src="/media/garden/seals/istargetsleeping-official.webp" width="42" height="42" alt="" aria-hidden="true" /> :
+  <svg class="project-paper-seal" viewBox="0 0 100 100" width="42" height="42" aria-hidden="true" focusable="false" data-seal={slug}>
+    <defs>
+      <filter id={filterId} x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+        {mark?.mode === 'span' && <>
+          <feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 .2126 .7152 .0722 0 -.025" />
+          <feComponentTransfer><feFuncA type="gamma" amplitude="1.3" exponent=".35" offset="0" /></feComponentTransfer>
+        </>}
+        <feColorMatrix values={matrix} />
+        <feDropShadow dx=".45" dy=".7" stdDeviation=".15" flood-color="#F18673" flood-opacity=".72" />
+        <feDropShadow dx="-.3" dy="-.45" stdDeviation=".25" flood-color="#310704" flood-opacity=".8" />
+      </filter>
+    </defs>
+    <image href="/media/garden/seals/wax-blank.webp" width="100" height="100" />
+    {mark ? <g filter={`url(#${filterId})`}>
+      {mark.viewBox ?
+        <svg x="22" y="22" width="56" height="56" viewBox={mark.viewBox} overflow="hidden" preserveAspectRatio="xMidYMid meet">
+          <image href={mark.asset} width={mark.width} height={mark.height} />
+        </svg> :
+        <image href={mark.asset} x="22" y="22" width="56" height="56" />}
+      </g> :
+      <g filter={`url(#${filterId})`} text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="12.5" stroke="black" stroke-width=".3" stroke-linejoin="round" paint-order="stroke">
+        {lines.map((line, index) => <text x="50" y={lines.length === 1 ? 54 : 45 + index * 14.5} textLength={line.length >= 8 ? '55' : undefined} lengthAdjust="spacingAndGlyphs">{line}</text>)}
+      </g>}
+  </svg>}

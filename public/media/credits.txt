@@ -1,0 +1,26 @@
+CodeSentry digital garden
+
+Original procedural tree, branches, petals, stamp, landscape and functional
+illustrations created for CodeSentry. Reference images and Bushido assets
+are not distributed by this website.
+
+Project images: isTargetSleeping (Spanish/English panels and activity),
+Cowork (Spanish/English presentation posters), Caninos y Felinos (home and
+shop), VidMaker (generated frame). Adapted to WebP from their original
+project documentation. Illustrations are conceptual, not application captures.
+
+Audio: Stream Sounds by kurt, CC BY 3.0
+https://opengameart.org/content/stream-sounds
+https://creativecommons.org/licenses/by/3.0/
+The stream recording was filtered, resampled, mixed with original synthesized
+wind and three isolated notes, and crossfaded into a seamless 57-second loop.
+There is no rhythmic accompaniment. Audio starts disabled on every visit.
+
+Studio decorations: original bonsai, floral arrangement and hanging-scroll
+geometry. Pine bark, cherry-petal and washi-paper textures were generated
+with built-in ImageGen and adapted to 512 x 512 WebP. The calligraphy glyph
+is rendered separately with Noto Serif JP. No third-party 3D models are used.
+
+Fonts: Noto Serif JP, Manrope and IBM Plex Mono. SIL Open Font License.
+See /fonts/licenses/noto-serif-jp.txt, /fonts/licenses/manrope.txt,
+and /fonts/licenses/ibm-plex-mono.txt for their license texts.

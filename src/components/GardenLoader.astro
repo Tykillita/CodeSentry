@@ -1,0 +1,136 @@
+---
+import type { Locale } from '../data/ui';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+// Each filled brush shape has its own writing mask, so crossing strokes do not
+// reveal each other. The six strokes follow the writing order of 守.
+const strokes = [
+  { shape: 'M46 20C50 21 55 24 55 28C55 31 51 32 49 29C49 26 48 23 46 21Z', line: 'M47 21Q52 24 52 29', duration: 240, delay: 0 },
+  { shape: 'M24 30H26C27 36 24 42 21 43C18 44 17 41 19 39C22 37 24 33 24 30Z', line: 'M25 30Q25 38 20 41', duration: 360, delay: 288 },
+  { shape: 'M25 33H74L78 29L84 35C85 36 82 37 80 37L73 43L72 42L76 35H25Z', line: 'M24 34H79L73 42', duration: 650, delay: 696 },
+  { shape: 'M19 49H75L79 44L86 50C87 51 85 52 83 52H19Z', line: 'M19 50.5H85', duration: 520, delay: 1394 },
+  { shape: 'M60 38L68 40C68 41 66 42 65 42V74C65 79 61 81 55 82C55 78 51 77 45 76V74C50 75 57 75 59 75C60 75 60 74 60 72Z', line: 'M62.5 38V74Q63 79 55 78L45 75', duration: 660, delay: 1962 },
+  { shape: 'M30 58C36 60 44 65 43 70C42 73 38 73 36 70C35 66 33 62 29 59Z', line: 'M30 59Q38 63 40 70', duration: 330, delay: 2670 },
+];
+---
+<div id="garden-loader" class="garden-loader" role="status" aria-live="polite" aria-atomic="true">
+  <div class="paper-grain" aria-hidden="true"></div>
+  <svg class="loader-seal" viewBox="0 0 100 100" aria-hidden="true">
+    <defs>
+      {strokes.map((stroke, index) => <mask id={`loader-stroke-${index}`} maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
+        <path class="loader-stroke" data-loader-last={index === strokes.length - 1 ? '' : undefined} d={stroke.line} pathLength="1" fill="none" stroke="white" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" style={`--stroke-duration:${stroke.duration}ms;--stroke-delay:${stroke.delay}ms`} />
+      </mask>)}
+    </defs>
+    <path fill="#D95C34" d="M0 0H100V100H0Z" />
+    <path fill="none" stroke="#FFF9EF" stroke-opacity=".55" stroke-width="1.3" d="M3 3H97V97H3Z" />
+    <g fill="#FFF9EF">
+      {strokes.map((stroke, index) => <path d={stroke.shape} mask={`url(#loader-stroke-${index})`} />)}
+    </g>
+  </svg>
+  <span class="visually-hidden">{locale === 'es' ? 'Cargando CodeSentry' : 'Loading CodeSentry'}</span>
+</div>
+
+<script is:inline>
+  (() => {
+    const root = document.documentElement;
+    const loader = document.getElementById('garden-loader');
+    const content = document.getElementById('garden-content');
+    const lastStroke = loader.querySelector('[data-loader-last]');
+    let drawn = false;
+    let exiting = false;
+    let finished = false;
+    let drawTimer = 0;
+    let exitTimer = 0;
+    let startFrame = 0;
+
+    content.inert = true;
+    content.setAttribute('aria-busy', 'true');
+
+    // Keep the layout and scene rendering active while blocking user navigation.
+    const blockPointer = event => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    };
+    const blockKeyboard = event => {
+      if (!event.ctrlKey && !event.metaKey && ['Tab', 'Enter', ' ', 'Escape', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown'].includes(event.key)) blockPointer(event);
+    };
+    window.addEventListener('wheel', blockPointer, { capture: true, passive: false });
+    window.addEventListener('touchmove', blockPointer, { capture: true, passive: false });
+    window.addEventListener('click', blockPointer, true);
+    window.addEventListener('keydown', blockKeyboard, true);
+
+    function finish() {
+      if (finished) return;
+      finished = true;
+      clearTimeout(drawTimer);
+      clearTimeout(exitTimer);
+      clearTimeout(recoveryTimer);
+      cancelAnimationFrame(startFrame);
+      observer.disconnect();
+      lastStroke.removeEventListener('animationend', onDrawn);
+      loader.removeEventListener('transitionend', onExit);
+      window.removeEventListener('wheel', blockPointer, true);
+      window.removeEventListener('touchmove', blockPointer, true);
+      window.removeEventListener('click', blockPointer, true);
+      window.removeEventListener('keydown', blockKeyboard, true);
+      content.inert = false;
+      content.removeAttribute('aria-busy');
+      root.dataset.loader = 'done';
+      loader.remove();
+      document.dispatchEvent(new Event('codesentry:loader-done'));
+    }
+
+    function reveal(force = false) {
+      const sceneReady = ['ready', 'fallback'].includes(root.dataset.scene);
+      if (exiting || finished || !drawn || (!force && (!sceneReady || root.dataset.gardenReady !== 'true'))) return;
+      exiting = true;
+      observer.disconnect();
+      root.dataset.loader = 'exiting';
+      exitTimer = window.setTimeout(finish, 650);
+    }
+
+    function onDrawn() {
+      if (drawn || finished) return;
+      drawn = true;
+      clearTimeout(drawTimer);
+      root.dataset.loader = 'waiting';
+      reveal();
+    }
+
+    function onExit(event) {
+      if (event.target === loader && event.propertyName === 'opacity' && exiting) finish();
+    }
+
+    const observer = new MutationObserver(() => reveal());
+    observer.observe(root, { attributes: true, attributeFilter: ['data-scene', 'data-garden-ready'] });
+    // This recovery lives outside every deferred module, including the scene.
+    const recoveryTimer = window.setTimeout(() => {
+      if (root.dataset.scene === 'loading') root.dataset.scene = 'fallback';
+      onDrawn();
+      reveal(true);
+    }, 15000);
+    lastStroke.addEventListener('animationend', onDrawn);
+    loader.addEventListener('transitionend', onExit);
+    startFrame = requestAnimationFrame(() => {
+      root.dataset.loader = 'drawing';
+      drawTimer = window.setTimeout(onDrawn, 3150);
+      reveal();
+    });
+  })();
+</script>
+
+<style>
+  .garden-loader { display:none; position:fixed; inset:0; z-index:1000; place-items:center; background:#F3E9D6; isolation:isolate; touch-action:none; opacity:1; transition:opacity 550ms cubic-bezier(.4,0,.2,1); }
+  :global(html.js[data-loader]:not([data-loader='done'])) .garden-loader { display:grid; }
+  .loader-seal { position:relative; width:124px; height:124px; transform:rotate(-2deg); }
+  .loader-stroke { stroke-dasharray:1; stroke-dashoffset:1; }
+  /* The logo loader is the one animation that always plays, including when
+     the visitor or operating system requests reduced motion. */
+  :global(html[data-loader='drawing']) .loader-stroke { animation:write-stroke var(--stroke-duration) cubic-bezier(.35,.05,.3,1) var(--stroke-delay) both!important; }
+  :global(html[data-loader='waiting']) .loader-stroke,
+  :global(html[data-loader='exiting']) .loader-stroke { stroke-dashoffset:0; }
+  :global(html[data-loader='exiting']) .garden-loader { transition:opacity 550ms cubic-bezier(.4,0,.2,1)!important; }
+  :global(html[data-loader='exiting']) .garden-loader { opacity:0; }
+  @keyframes write-stroke { from { stroke-dashoffset:1; } to { stroke-dashoffset:0; } }
+  @media (max-width:600px) { .loader-seal { width:104px; height:104px; } }
+</style>

@@ -1,0 +1,35 @@
+[
+  {
+    "name": "bark",
+    "original": "artifacts/decorations/originals/bark.png",
+    "output": "public/media/studio/decor-bark-v1.webp",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "alpha": false,
+    "bytes": 117300
+  },
+  {
+    "name": "petal",
+    "original": "artifacts/decorations/originals/petal.png",
+    "output": "public/media/studio/decor-petal-v1.webp",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "alpha": true,
+    "bytes": 40472
+  },
+  {
+    "name": "washi",
+    "original": "artifacts/decorations/originals/washi.png",
+    "output": "public/media/studio/decor-washi-v1.webp",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "alpha": false,
+    "bytes": 26772
+  }
+]
