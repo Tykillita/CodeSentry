@@ -1,0 +1,91 @@
+name: Quality and Firebase Hosting
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Check and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.0
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codesentry-dist
+          path: dist/
+          if-no-files-found: error
+          retention-days: 1
+
+  preview:
+    name: Firebase Hosting preview
+    if: github.event_name == 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    env:
+      FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_GOCODESENTRY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: codesentry-dist
+          path: dist/
+      - name: Explain fork preview limitation
+        if: github.event.pull_request.head.repo.full_name != github.repository
+        run: echo "Firebase previews are unavailable to fork pull requests because repository secrets are not shared."
+      - name: Require Firebase credentials for same-repository previews
+        if: github.event.pull_request.head.repo.full_name == github.repository && env.FIREBASE_SERVICE_ACCOUNT == ''
+        run: |
+          echo "::error::Configure FIREBASE_SERVICE_ACCOUNT_GOCODESENTRY in repository secrets."
+          exit 1
+      - name: Deploy preview
+        if: github.event.pull_request.head.repo.full_name == github.repository && env.FIREBASE_SERVICE_ACCOUNT != ''
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ env.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: gocodesentry
+          expires: 7d
+
+  deploy:
+    name: Firebase Hosting production
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_GOCODESENTRY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: codesentry-dist
+          path: dist/
+      - name: Require Firebase credentials
+        if: env.FIREBASE_SERVICE_ACCOUNT == ''
+        run: |
+          echo "::error::Configure FIREBASE_SERVICE_ACCOUNT_GOCODESENTRY in repository secrets."
+          exit 1
+      - name: Deploy live
+        if: env.FIREBASE_SERVICE_ACCOUNT != ''
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          firebaseServiceAccount: ${{ env.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: gocodesentry
+          channelId: live

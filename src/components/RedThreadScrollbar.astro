@@ -1,0 +1,68 @@
+---
+import type { Locale } from '../data/ui';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+---
+<div id="red-thread" class="red-thread" role="slider" tabindex="-1"
+  aria-label={locale === 'es' ? 'Recorrido con cuerda roja' : 'Red thread journey'}
+  aria-orientation="vertical" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
+  aria-disabled="true" aria-describedby="red-thread-help">
+  <span id="red-thread-help" class="visually-hidden">{locale === 'es'
+    ? 'Arrastra el nudo o pulsa a otra altura para recorrer el jardín. Flechas: uno por ciento. Re Pág y Av Pág: diez por ciento. Inicio y Fin: extremos del recorrido.'
+    : 'Drag the knot or click at another height to explore the garden. Arrows: one percent. Page Up and Page Down: ten percent. Home and End: the ends of the journey.'}</span>
+  <svg class="red-thread-art" viewBox="0 0 36 900" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <pattern id="thread-fibres" width="6" height="7" patternUnits="userSpaceOnUse">
+        <path d="M-2 1 8 6M-2-6 8-1M-2 8 8 13" fill="none" stroke="#FFE2C3" stroke-opacity=".34" stroke-width=".65"/>
+        <path d="M-2 2 8 7M-2-5 8 0" fill="none" stroke="#651A22" stroke-opacity=".48" stroke-width=".6"/>
+      </pattern>
+      <mask id="thread-fibre-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="36" height="10000">
+        <path data-thread-path d="M18 0V32" fill="none" stroke="white" stroke-width="4.8" stroke-linecap="round"/>
+      </mask>
+      <linearGradient id="thread-knot-colour" gradientUnits="userSpaceOnUse" x1="-8" y1="0" x2="8" y2="0">
+        <stop stop-color="#76202A"/><stop offset=".28" stop-color="#D9573F"/><stop offset=".48" stop-color="#BA3432"/><stop offset=".72" stop-color="#A3262A"/><stop offset="1" stop-color="#671A24"/>
+      </linearGradient>
+      <filter id="thread-knot-shadow" x="-70%" y="-50%" width="240%" height="220%">
+        <feDropShadow dx=".7" dy="1.1" stdDeviation=".8" flood-color="#5D2626" flood-opacity=".28"/>
+      </filter>
+    </defs>
+    <path data-thread-path d="M18 0V32" fill="none" stroke="#59252A" stroke-opacity=".14" stroke-width="6" transform="translate(.7 .5)" stroke-linecap="round"/>
+    <path data-thread-path d="M18 0V32" fill="none" stroke="#86232B" stroke-width="5" stroke-linecap="round"/>
+    <path data-thread-path d="M18 0V32" fill="none" stroke="#C93D34" stroke-width="3.7" transform="translate(-.2 0)" stroke-linecap="round"/>
+    <path data-thread-path d="M18 0V32" fill="none" stroke="#F39C71" stroke-opacity=".7" stroke-width="1" transform="translate(-1.1 0)" stroke-linecap="round"/>
+    <rect width="36" height="100%" fill="url(#thread-fibres)" mask="url(#thread-fibre-mask)"/>
+    <g data-thread-knot transform="translate(18 32)">
+      <rect class="red-thread-grip" x="-18" y="-20" width="36" height="44" fill="transparent"/>
+      <g fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#thread-knot-shadow)">
+        <path d="M-1-8C-8-11-9-1-3 3L3 7C9 11 10 1 4-3L-1-8Z" stroke="#671A24" stroke-width="4.7"/>
+        <path d="M-1-8C-8-11-9-1-3 3L3 7C9 11 10 1 4-3L-1-8Z" stroke="url(#thread-knot-colour)" stroke-width="3.7"/>
+        <path d="M1-9C5-6 6-1 1 2L-3 5C-5 7-3 10 0 11" stroke="#76202A" stroke-width="4.5"/>
+        <path d="M1-9C5-6 6-1 1 2L-3 5C-5 7-3 10 0 11" stroke="url(#thread-knot-colour)" stroke-width="3.5"/>
+        <path d="M-4-6C-7-4-6-1-3 1M4 4C6 6 6 8 4 8M2-6C4-3 3-1 0 1L-3 4" stroke="#F7AE84" stroke-opacity=".65" stroke-width=".8"/>
+        <path d="M-3 7Q-5 13-2 18M2 8Q5 12 3 17" stroke="#A3262A" stroke-width="2.2"/>
+        <path d="M-3 8Q-4 13-2 17M2 9Q4 13 3 16" stroke="#DF7556" stroke-opacity=".8" stroke-width=".55"/>
+        <path d="M-2 17-3 20M-2 17 0 19M3 16 2 19M3 16 4 18" stroke="#B83A32" stroke-width=".6"/>
+        <path d="M-6-6-3-7M-7-3-4-4M-4 1-1 0M4 2 7 1M3 7 6 6M0-5 3-6M-2 5 1 4" stroke="#651A22" stroke-opacity=".42" stroke-width=".6"/>
+      </g>
+    </g>
+  </svg>
+</div>
+
+<style is:global>
+  .red-thread { display:none;position:fixed;z-index:25;top:0;right:0;width:36px;height:100svh;touch-action:none;user-select:none;cursor:pointer;outline:none; }
+  .red-thread-art { display:block;width:100%;height:100%;overflow:visible; }
+  .red-thread-grip { cursor:grab; }
+  .red-thread[data-dragging] { cursor:grabbing; }
+  .red-thread[data-dragging] .red-thread-grip { cursor:grabbing; }
+  .red-thread:focus-visible [data-thread-knot] { filter:drop-shadow(0 0 2px #d95c3466); }
+  .red-thread[aria-disabled='true'] { pointer-events:none; }
+  @media (min-width:900px) and (pointer:fine) {
+    html.red-thread-ready { scrollbar-width:none; }
+    html.red-thread-ready::-webkit-scrollbar { width:0;height:0;display:none; }
+    .red-thread-ready .red-thread { display:block; }
+    .red-thread-ready .journey-viewport { scroll-snap-type:none; }
+    .red-thread-ready .site-header { margin-right:max(3.5%,40px); }
+    .red-thread-ready .journey-controls { right:max(3.5%,40px); }
+  }
+  html:not([data-loader='done']) .red-thread { visibility:hidden; }
+</style>

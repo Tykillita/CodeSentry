@@ -1,0 +1,47 @@
+---
+interface Props { visual: string; flow: string[]; variant?: 'full' | 'ink'; uid?: string; }
+const {visual, flow, variant = 'full', uid = visual} = Astro.props;
+const ink = variant === 'ink';
+const grid = `grid-${visual}-${uid}`;
+const graph = ['network','team','alert','route'].includes(visual);
+const paper = ['documents','quote','week','habits'].includes(visual);
+---
+<svg class:list={['project-art', {'project-art-ink': ink}]} xmlns="http://www.w3.org/2000/svg" viewBox={ink ? '70 50 480 290' : '0 0 620 390'} role="img" aria-label={flow.join(' → ')} data-visual={visual}>
+  {!ink && <>
+    <defs><pattern id={grid} width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="currentColor" stroke-width=".4" opacity=".1"/></pattern></defs>
+    <rect width="620" height="390" fill={`url(#${grid})`}/>
+    <circle cx="310" cy="174" r="130" fill="#FFF9EF" opacity=".75"/>
+  </>}
+  <g stroke="#253136" stroke-width="2" fill="none" stroke-linejoin="round">
+    {graph && ['network','team'].includes(visual) && <>
+      <path stroke="#8C9A88" stroke-dasharray="5 8" d="M132 179Q235 70 310 158T495 164M310 158V268M132 179Q237 292 310 268T495 164"/>
+      {[{x:132,y:179},{x:310,y:158},{x:495,y:164},{x:310,y:268}].map(({x,y},i)=><g transform={`translate(${x} ${y})`}>
+        <rect x="-37" y="-30" width="74" height="60" rx="3" fill="#FFF9EF"/>
+        <rect x="-26" y="-19" width="52" height="29" fill={i===1?'#E8B8B1':'#F3E9D6'}/><path d="M-15 21H15M0 11V21"/>
+        <circle cx="31" cy="-24" r="6" fill="#D95C34" stroke="none"/>
+      </g>)}
+      {visual==='alert' && <path d="M298 149 306 158 322 141" stroke="#D95C34" stroke-width="3"/>}
+      {visual==='route' && <path d="M307 250Q291 265 310 282Q329 265 313 250Z" fill="#D95C34" stroke="none"/>}
+    </>}
+    {visual==='route' && <g><path d="M115 119 492 102M140 270 512 260M169 81 206 303M339 87 317 305M451 80 416 302" stroke="#8C9A88" opacity=".3" stroke-width="9"/><path d="M177 240Q215 99 317 170T453 136" stroke="#D95C34" stroke-width="3" stroke-dasharray="5 7"/>{[{x:177,y:240},{x:317,y:170},{x:453,y:136}].map(({x,y})=><g transform={`translate(${x} ${y})`}><path d="M0 0Q-38-40-17-59Q0-74 17-59Q38-40 0 0Z" fill="#FFF9EF"/><circle cx="0" cy="-45" r="8" fill="#D95C34" stroke="none"/></g>)}</g>}
+    {visual==='alert' && <g><rect x="106" y="143" width="75" height="75" rx="3" fill="#FFF9EF"/><path d="M127 180H160M144 164V198" stroke="#D95C34" stroke-width="4"/><path d="M182 180H258M355 180H383V117H423M383 180V253H423" stroke="#8C9A88" stroke-dasharray="5 5"/><path d="M310 119 351 137V178Q347 218 310 239Q273 218 269 178V137Z" fill="#FFF9EF"/><path d="M292 175 305 188 330 160" stroke="#D95C34" stroke-width="4"/>{[89,225].map(y=><g transform={`translate(424 ${y})`}><rect width="82" height="55" rx="3" fill="#FFF9EF"/><circle cx="20" cy="18" r="7" fill="#E8B8B1" stroke="none"/><path d="M9 38Q20 26 31 38M42 18H69M42 31H63"/></g>)}</g>}
+    {paper && <>
+      <path d="M197 77H419V293H197Z" fill="#E8B8B1" opacity=".55" transform="rotate(7 310 180)"/>
+      <path d="M195 65H400L425 90V295H195Z" fill="#FFF9EF"/><path d="M400 65V90H425M223 107H354M223 117H309"/>
+      {['week','habits'].includes(visual)?<>
+        {[0,1,2,3,4].map(i=><path d={`M${225+i*34} 143V260`} opacity=".25"/>)}
+        {[0,1,2,3].map(i=><path d={`M225 ${143+i*39}H395`} opacity=".25"/>)}
+        {[{x:244,y:164},{x:277,y:201},{x:346,y:240},{x:380,y:166}].map(({x,y})=><circle cx={x} cy={y} r="9" fill="#D95C34" stroke="none"/>)}
+      </>:<>{[0,1,2,3].map(i=><g><path d={`M225 ${155+i*24}H389`} opacity=".3"/><path d={`M225 ${150+i*24}H${280+i*22}`} stroke-width="4" stroke="#8C9A88"/></g>)}<rect x="349" y="253" width="40" height="21" fill="#D95C34" stroke="none"/></>}
+    </>}
+    {visual==='court' && <g transform="translate(147 104)"><path d="M0 0H326V177H0Z" fill="#8C9A88" opacity=".16"/><path d="M0 0H326V177H0ZM75 0V177M251 0V177M75 88H251M163 0V177"/><path d="M163-10V187" stroke="#D95C34" stroke-dasharray="3 3"/><circle cx="99" cy="53" r="13" fill="#D95C34" stroke="none"/><circle cx="228" cy="125" r="13" fill="#E8B8B1"/><path d="M109 61 133 80M219 116 198 99" stroke-width="4"/></g>}
+    {visual==='carwash' && <g><path d="M190 229V190L219 142H388L422 190V229Z" fill="#FFF9EF"/><path d="M221 149 203 187H408L382 149ZM195 206H417M257 193H358"/><circle cx="226" cy="230" r="22" fill="#253136"/><circle cx="389" cy="230" r="22" fill="#253136"/><path d="M163 105 148 154M176 108 166 158M453 105 469 154M442 108 452 158" stroke="#8C9A88" stroke-width="5"/><path d="M158 89 151 70M309 90V68M460 90 471 72" stroke="#D95C34" stroke-width="3"/></g>}
+    {visual==='data' && <g><path d="M162 100V285H463"/><path d="M177 245 216 202 246 220 286 159 327 180 364 122 405 149 448 96" stroke="#D95C34" stroke-width="3"/><path d="M177 246 216 202 246 220 286 159 327 180 364 122 405 149 448 96V284H177Z" fill="#E8B8B1" stroke="none" opacity=".35"/>{[0,1,2,3,4,5,6].map(i=><path d={`M${190+i*37} 273V${255-i*9}`} stroke="#8C9A88" stroke-width="12"/>)}</g>}
+    {visual==='food' && <g><circle cx="310" cy="180" r="105" fill="#FFF9EF"/><circle cx="310" cy="180" r="83" opacity=".25"/><path d="M188 99V253M170 100V143Q170 153 188 153T206 143V100M188 100V149M444 100Q412 141 434 163H444V252"/><path d="M263 192Q258 144 303 149T350 185Q341 224 293 220Z" fill="#E8B8B1"/><path d="M286 185 305 174 332 194M286 197 312 203" stroke="#D95C34" stroke-width="3"/></g>}
+    {visual==='video' && <g><rect x="142" y="89" width="336" height="201" rx="2" fill="#FFF9EF"/><path d="M142 121H478M142 258H478"/>{[0,1,2,3,4,5,6,7].map(i=><g fill="#8C9A88" stroke="none"><rect x={153+i*41} y="99" width="17" height="12"/><rect x={153+i*41} y="269" width="17" height="12"/></g>)}<path d="M290 151 345 188 290 226Z" fill="#D95C34" stroke="none"/></g>}
+    {visual==='game' && <g fill="#253136" stroke="none"><path d="M220 186V142H254V111H301V165H273V214H250V252H236V218L213 207H199V169H212V186ZM271 167H290V177H279V189H271Z"/><rect x="282" y="123" width="6" height="6" fill="#FFF9EF"/><path d="M386 251V171H398V191H414V156H425V205H398V251Z" fill="#8C9A88"/><path d="M159 253H462" stroke="#253136"/><circle cx="437" cy="108" r="24" fill="#D95C34" opacity=".45"/></g>}
+    {visual==='sleep' && <g><rect x="205" y="75" width="210" height="238" rx="9" fill="#FFF9EF"/><circle cx="310" cy="160" r="44" stroke="#8C9A88"/><path d="M327 120Q289 131 300 164T348 190Q328 219 292 201T269 146Q286 116 327 120Z" fill="#E8B8B1" stroke="none"/><path d="M240 245H378M240 260H322M240 275H351" opacity=".35"/></g>}
+    {visual==='vet' && <g><path d="M205 252V125L242 154Q310 124 378 154L415 125V252Z" fill="#FFF9EF"/><path d="M285 225Q310 245 335 225M310 211V231"/><circle cx="265" cy="192" r="6" fill="#253136"/><circle cx="355" cy="192" r="6" fill="#253136"/><path d="M302 202H318L310 215Z" fill="#D95C34" stroke="none"/></g>}
+  </g>
+  <g fill="#8C9A88"><circle cx="120" cy="305" r="3"/><circle cx="500" cy="87" r="4"/><path d="M92 86h18m-9-9v18M508 304h18m-9-9v18" stroke="#8C9A88"/></g>
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 400" preserveAspectRatio="none" fill="none">
+  <defs>
+    <path id="paper" d="M6.0 5.4 20.8 4.5 32.8 4.4 41.5 4.3 50.8 5.7 60.4 5.0 78.1 6.3 96.1 4.4 107.3 3.2 118.7 7.1 132.8 6.5 146.6 3.0 157.0 6.6 168.5 6.3 179.9 7.0 190.6 6.3 207.6 6.8 225.6 4.7 232.5 6.0 232.0 19.2 235.2 34.1 235.7 48.2 234.9 59.6 234.4 73.9 235.5 86.7 233.9 104.4 232.1 119.3 234.6 134.6 235.4 152.7 233.5 163.9 231.9 178.8 232.5 191.8 232.1 201.3 232.4 217.2 233.5 228.1 232.2 245.0 234.2 257.8 235.4 274.9 233.0 291.7 233.4 304.2 236.0 321.3 232.6 331.1 232.8 341.8 234.4 355.0 231.8 366.0 233.4 378.5 236.0 392.4 234.0 394.1 219.5 394.8 210.6 395.8 194.6 395.6 178.4 393.5 166.0 392.3 151.4 392.1 142.4 392.7 132.4 393.3 123.5 391.8 113.6 392.2 101.6 391.9 84.6 394.5 74.8 392.9 63.0 393.4 53.4 395.5 35.3 393.9 22.1 392.2 12.7 393.3 7.4 394.0 3.9 384.0 6.1 366.3 6.2 356.5 6.1 347.8 7.6 329.8 4.9 314.6 4.5 302.6 6.1 286.6 5.3 270.6 7.4 260.0 7.6 242.0 7.4 225.7 4.8 210.0 5.4 196.5 3.9 187.8 4.9 176.7 8.0 161.5 7.9 148.7 8.0 130.7 4.8 118.7 4.7 108.1 6.5 97.7 7.5 80.4 6.7 67.3 4.2 51.1 7.8 36.2 7.1 20.2 4.6 7.1Z"/>
+    <clipPath id="paper-clip"><use href="#paper"/></clipPath>
+    <radialGradient id="age" cx=".5" cy=".46" r=".78">
+      <stop stop-color="#F6E8C6"/><stop offset=".62" stop-color="#EBD5A6"/><stop offset=".9" stop-color="#D6B378"/><stop offset="1" stop-color="#BE9152"/>
+    </radialGradient>
+    <radialGradient id="stain"><stop stop-color="#9E743B" stop-opacity=".18"/><stop offset="1" stop-color="#9E743B" stop-opacity="0"/></radialGradient>
+    <pattern id="fibres" width="21" height="15" patternUnits="userSpaceOnUse">
+      <path d="M0 2Q7 1 21 3M0 8Q10 9 21 7M0 13H21" stroke="#977346" stroke-opacity=".14" stroke-width=".5"/>
+      <path d="M4 0 3 15M12 0 13 15M18 0 18 15" stroke="#FFF2CD" stroke-opacity=".36" stroke-width=".6"/>
+    </pattern>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".16 .72" numOctaves="2" seed="11" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope=".13"/></feComponentTransfer>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+  <use href="#paper" fill="url(#age)"/>
+  <g clip-path="url(#paper-clip)">
+    <path d="M0 0H240V400H0Z" fill="url(#fibres)"/>
+    <ellipse cx="19" cy="360" rx="53" ry="56" fill="url(#stain)"/>
+    <ellipse cx="221" cy="32" rx="48" ry="48" fill="url(#stain)"/>
+    <ellipse cx="204" cy="280" rx="29" ry="32" fill="url(#stain)" opacity=".6"/>
+    <path d="M0 0H240V400H0Z" fill="#D5B680" filter="url(#grain)" opacity=".17"/>
+    <path d="M114 245l0.7 12" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M10 141l-0.9 23" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M163 224l0.2 21" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M41 165l-1.4 24" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M21 304l-1.7 21" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M83 152l1.4 10" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M22 339l0.0 11" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M229 350l-1.5 17" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M38 118l0.5 13" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M164 23l-1.3 23" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M98 157l0.4 18" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M94 15l0.9 25" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M227 247l-0.6 16" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M163 251l-1.5 14" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M89 191l1.2 18" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M14 305l-0.3 18" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M58 160l-0.4 22" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M31 205l-1.3 21" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M16 105l-0.6 20" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M20 172l-1.2 15" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M115 355l-0.1 25" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M46 342l-0.5 13" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M176 338l-2.0 14" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M181 129l-1.0 10" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M17 231l1.9 26" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M121 13l-0.7 23" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M194 238l-1.1 18" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M115 233l-0.9 25" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M208 63l-0.8 24" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M70 349l0.1 21" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M166 82l-0.9 14" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M161 258l-1.5 24" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M102 92l-0.3 26" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M133 233l1.7 25" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M178 157l0.4 24" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/><path d="M185 216l-0.6 16" stroke="#FFF1CB" stroke-opacity=".42" stroke-width=".7"/>
+    <path d="M10 12Q72 9 132 11T230 12" stroke="#FFF0CC" stroke-opacity=".55" stroke-width=".8"/>
+    <path d="M10 388Q72 391 132 389T230 388" stroke="#926E3F" stroke-opacity=".22" stroke-width=".65"/>
+    <path d="M7 120l1.4 0.4" stroke="#8A6537" stroke-opacity=".32" stroke-width=".7"/><path d="M233 248l-2.9 1.3" stroke="#8A6537" stroke-opacity=".32" stroke-width=".7"/><path d="M72 394l2.4 1.8" stroke="#8A6537" stroke-opacity=".32" stroke-width=".7"/><path d="M187 6l2.4 2.5" stroke="#8A6537" stroke-opacity=".32" stroke-width=".7"/><path d="M7 320l0.2 1.7" stroke="#8A6537" stroke-opacity=".32" stroke-width=".7"/>
+  </g>
+  <use href="#paper" stroke="#B88A4C" stroke-opacity=".6" stroke-width=".8"/>
+</svg>

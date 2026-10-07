@@ -1,0 +1,51 @@
+---
+import '../styles/garden.css';
+import '@fontsource/noto-serif-jp/latin-400.css';
+import '@fontsource/manrope/latin-400.css';
+import '@fontsource/manrope/latin-500.css';
+import '@fontsource/manrope/latin-600.css';
+import '@fontsource/ibm-plex-mono/latin-400.css';
+import type { Locale } from '../data/ui';
+import GardenLoader from '../components/GardenLoader.astro';
+interface Props { locale: Locale; title?: string; description?: string; garden?: boolean; }
+const {locale, garden = false, title = 'CodeSentry — ' + (Astro.props.locale === 'es' ? 'Software, en perspectiva' : 'Software, in perspective'), description = locale === 'es' ? 'Explora 16 productos, herramientas y sistemas de CodeSentry. Propósito, funciones y arquitectura en un jardín digital.' : 'Explore 16 CodeSentry products, tools and systems. Purpose, features and architecture in a digital garden.'} = Astro.props;
+const canonical = new URL(`/${locale}/`, Astro.site);
+---
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {garden && <script is:inline>
+      // Resolve the first paint before the deferred application can run.
+      const gardenRoot = document.documentElement;
+      let gardenQuiet = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      try {
+        const saved = localStorage.getItem('codesentry:motion:v1');
+        if (saved === 'quiet' || saved === 'animated') gardenQuiet = saved === 'quiet';
+      } catch { /* The system preference still works without storage. */ }
+      gardenRoot.classList.add('js');
+      gardenRoot.dataset.loader = 'pending';
+      gardenRoot.classList.toggle('quiet', gardenQuiet);
+      gardenRoot.dataset.scene = 'loading';
+    </script>}
+    <meta name="theme-color" content="#F3E9D6" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/media/garden/mark.svg?v=2" />
+    <link rel="apple-touch-icon" href="/media/garden/apple-touch-icon.png?v=2" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="es" href={new URL('/es/', Astro.site)} />
+    <link rel="alternate" hreflang="en" href={new URL('/en/', Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL('/es/', Astro.site)} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL('/media/garden/social.png?v=2', Astro.site)} />
+    <meta property="og:locale" content={locale === 'es' ? 'es_PA' : 'en_US'} />
+  </head>
+  <body data-locale={locale}>
+    {garden ? <><div id="garden-content"><slot /></div><GardenLoader locale={locale} /></> : <slot />}
+  </body>
+</html>

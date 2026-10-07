@@ -1,0 +1,163 @@
+---
+import PapyrusArrow from './PapyrusArrow.astro';
+import StudioExitButton from './StudioExitButton.astro';
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import GardenBackdrop from './GardenBackdrop.astro';
+import RedThreadScrollbar from './RedThreadScrollbar.astro';
+import ScrollReaderControl from './ScrollReaderControl.astro';
+import GardenScene from './scene/GardenScene';
+import ProjectDetail from './ProjectDetail.astro';
+import ProjectVisual from './ProjectVisual.astro';
+import ProjectSeal from './ProjectSeal.astro';
+import { ui, areas, type Locale } from '../data/ui';
+interface Props { locale: Locale; }
+const {locale} = Astro.props; const t=ui[locale];
+const projects=(await getCollection('projects')).map(p=>p.data).sort((a,b)=>a.order-b.order);
+const techs=[...new Set(projects.flatMap(p=>p.technologies))].sort();
+const sceneProjects=projects.map(p=>({slug:p.slug,order:p.order,title:p[locale].title,area:areas[p.area][locale],areaMark:areas[p.area].mark,subtitle:p[locale].subtitle,flow:p[locale].flow,detail:t.detail}));
+---
+<Base locale={locale} garden>
+  <a class="skip-link" href="#catalogue">{t.skip}</a>
+  <GardenBackdrop />
+  <GardenScene client:load projects={sceneProjects} />
+  <header class="site-header">
+    <a class="brand" href={`/${locale}/`} data-go="0" aria-label="CodeSentry"><span class="brand-seal" aria-hidden="true">守</span><span>CodeSentry<small>DIGITAL GARDEN</small></span></a>
+    <nav class="main-nav" aria-label={locale==='es'?'Navegación principal':'Main navigation'}>
+      <a href="#inicio" data-go="0"><span aria-hidden="true">始</span>{t.home}</a>
+      <button data-open="index-dialog"><span aria-hidden="true">作</span>{t.projects}</button>
+      <a href="#enfoque" data-go="17"><span aria-hidden="true">道</span>{t.approach}</a>
+    </nav>
+    <StudioExitButton id="studio-exit" label={t.garden} hidden />
+    <a class="language-link" href={`/${locale==='es'?'en':'es'}/`} data-language aria-label={locale==='es'?'Read in English':'Leer en español'}><span class={locale==='es'?'selected':''}>ES</span><span aria-hidden="true">/</span><span class={locale==='en'?'selected':''}>EN</span></a>
+  </header>
+  <main id="journey">
+    <div class="journey-viewport" id="catalogue" tabindex="-1">
+      <div class="parchment" id="parchment">
+        <section class="panel hero" id="inicio" data-panel data-slug="">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="tiny-line"></span>{t.eyebrow}</p>
+            <h1>{t.heroA}<br/>{t.heroB}<br/><em>{t.heroC}</em></h1>
+            <p class="hero-intro">{t.intro}</p>
+            <div class="hero-actions">
+              <a class="paper-button papyrus-cta" href="#proyecto-istargetsleeping" data-go="1" data-travel>
+                <span class="papyrus-label">{t.explore}</span>
+                <PapyrusArrow id="papyrus-arrow" />
+              </a>
+              <button class="text-link" data-open="index-dialog">{t.indexCta}<span aria-hidden="true">↗</span></button>
+            </div>
+            <noscript><details class="static-index"><summary>{t.index}</summary><ol>{projects.map(p=><li><a href={`#proyecto-${p.slug}`}>{p[locale].title} →</a></li>)}</ol></details></noscript>
+            <p class="origin">{t.origin}</p>
+          </div>
+          <div class="studio-intro">
+            <p class="eyebrow"><span class="tiny-line"></span>{t.studioEyebrow}</p>
+            <h2>{t.studioTitle}</h2>
+            <p class="hero-intro">{t.studioIntro}</p>
+            <div class="hero-actions">
+              <a class="paper-button papyrus-cta" href="#proyecto-istargetsleeping" data-go="1" data-travel>
+                <span class="papyrus-label">{t.explore}</span>
+                <PapyrusArrow id="studio-papyrus-arrow" />
+              </a>
+            </div>
+          </div>
+          <div class="garden-inscription" aria-hidden="true"><span>桜</span><small>SAKURA<br/>CODESENTRY</small></div>
+          <div class="hero-bottom"><span class="scroll-instruction"><span class="desktop-hint">↓ {t.scroll}</span><span class="touch-hint">→ {t.swipe}</span></span><span>16 {t.results} <span aria-hidden="true">·</span> 4 {locale==='es'?'áreas':'areas'}</span></div>
+        </section>
+        {projects.map(p=> {
+          const c=p[locale];
+          return <article class={`panel project-panel visual-${p.visual}`} id={`proyecto-${p.slug}`} data-panel data-slug={p.slug}>
+            <div class="project-copy">
+              <p class="eyebrow"><span class="area-mark" aria-hidden="true">{areas[p.area].mark}</span>{areas[p.area][locale]}</p>
+              <p class="project-position">{String(p.order).padStart(2,'0')} <span>/ 16</span></p>
+              <h2>{c.title}</h2><p class="project-subtitle">{c.subtitle}</p><p class="project-summary">{c.summary}</p>
+              <div class="tags">{p.technologies.slice(0,4).map(tech=><span>{tech}</span>)}</div>
+              <div class="project-actions">
+                <button class="paper-button project-paper-cta" data-detail={p.slug}>
+                  <span class="project-paper-label">{t.detail}</span><ProjectSeal slug={p.slug} name={c.title} />
+                </button>
+                {p.links.slice(0,1).map(link=><a class="text-link" href={link.url} target="_blank" rel="noopener noreferrer">{t[link.type]} ↗</a>)}
+              </div>
+              <p class="platform-label">{t.platform}<span>{p.platforms.join(' / ')}</span></p>
+            </div>
+            <figure class="project-figure parchment-project-figure" data-parchment-host data-slug={p.slug}>
+              <div class="parchment-stage">
+                <button class="parchment-action" data-detail={p.slug} aria-label={`${t.detail}: ${c.title}`}>
+                  <span class="parchment-fallback" aria-hidden="true">
+                    <span class="parchment-fallback-head"><span class="parchment-fallback-area"><b>{areas[p.area].mark}</b>{areas[p.area][locale]}</span><span class="parchment-fallback-order">{String(p.order).padStart(2,'0')} / 16</span></span>
+                    <span class="parchment-fallback-title">{c.title}</span>
+                    <span class="parchment-fallback-art"><ProjectVisual visual={p.visual} flow={c.flow} variant="ink" uid={p.slug} /></span>
+                    <span class="parchment-fallback-flow">{c.flow.map((step,i)=><span><i>{i+1}</i>{step}</span>)}</span>
+                    <span class="parchment-fallback-foot"><span class="parchment-fallback-cta">{t.detail} ↗</span><span class="parchment-fallback-seal">{areas[p.area].mark}</span></span>
+                  </span>
+                  <span class="visually-hidden">{t.detail}: {c.title}</span>
+                </button>
+              </div>
+              <figcaption aria-hidden="true">{String(p.order).padStart(2,'0')} — 守</figcaption>
+            </figure>
+            <details class="fallback-detail"><summary>{t.detail}</summary><ProjectDetail project={p} locale={locale}/></details>
+          </article>;
+        })}
+        <section class="panel closing" id="enfoque" data-panel data-slug="">
+          <div class="closing-copy"><p class="eyebrow">{t.endEyebrow}</p><h2>{t.endA}<br/><em>{t.endB}</em></h2><p>{t.endIntro}</p><ul>{t.endPoints.map(p=><li>{p}</li>)}</ul><div class="hero-actions"><button class="paper-button" data-open="index-dialog">{t.indexCta} ↗</button><a class="text-link" href="#inicio" data-go="0">{t.return} ↑</a></div></div>
+          <span class="closing-seal" aria-hidden="true">桜</span>
+          <footer><span>CodeSentry · {new Date().getFullYear()}</span><button class="text-link" data-open="credits-dialog">{t.credits}</button><noscript><a class="text-link" href="/media/credits.txt">{t.credits}</a></noscript></footer>
+        </section>
+      </div>
+    </div>
+  </main>
+  <!-- studio controls and the strip preview card. -->
+  <button class="studio-hit" id="studio-hit" data-detail="" hidden aria-label={t.detail}></button>
+  <div class="strip-card" id="strip-card" hidden aria-live="polite">
+    <p class="strip-card-area"></p>
+    <p class="strip-card-title"></p>
+    <p class="strip-card-subtitle"></p>
+    <div class="strip-card-art" aria-hidden="true"></div>
+    <button class="paper-button strip-card-enter" data-studio=""><span class="papyrus-label">{t.toTable}</span><PapyrusArrow id="strip-arrow" /></button>
+  </div>
+  <footer class="journey-controls" aria-label={locale==='es'?'Controles del jardín':'Garden controls'}>
+    <div class="environment-controls">
+      <button id="audio-toggle" aria-pressed="false" aria-label={t.audioOff}>
+        <svg class="control-icon sound-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M3 8c3-3 6 3 9 0s6 3 9 0M3 12c3-3 6 3 9 0s6 3 9 0M3 16c3-3 6 3 9 0s6 3 9 0"/></svg>
+        <span class="control-caption">{t.audio}</span><span id="audio-state">{locale==='es'?'apagado':'off'}</span>
+      </button>
+      <button id="motion-toggle" aria-pressed="false" aria-label={t.calm}>
+        <svg class="control-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19C3 10 7 4 20 3c-1 12-7 17-15 16ZM5 19 16 8M10 14l-1-5M13 11l5 1"/></svg>
+        <span class="control-caption">{t.movement}</span>
+      </button>
+    </div>
+    <nav class="journey-navigation" aria-label={locale==='es'?'Recorrido de proyectos':'Project journey'}>
+      <span id="current-project" aria-live="polite">{t.home}</span>
+      <div class="progress-rail" aria-hidden="true"><span id="progress-fill"></span></div>
+      <button id="previous-panel" aria-label={t.previous}><svg class="control-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12H4m6-6-6 6 6 6"/></svg></button>
+      <button id="next-panel" aria-label={t.next}><svg class="control-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button>
+      <button class="index-button" data-open="index-dialog" aria-label={t.index}><svg class="control-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M9 6h12M9 12h12M9 18h12M3 6h1M3 12h1M3 18h1"/></svg></button>
+    </nav>
+  </footer>
+  <RedThreadScrollbar locale={locale} />
+  <p class="status-toast" id="status-toast" role="status"></p>
+  <dialog class="paper-dialog index-dialog" id="index-dialog" aria-labelledby="index-title">
+    <div class="dialog-top"><span class="eyebrow">CODESENTRY / 16</span><button data-close aria-label={t.close}>×</button></div>
+    <h2 id="index-title">{t.index}</h2>
+    <div class="index-filters"><label><span>{t.search}</span><input type="search" id="project-search" placeholder={locale==='es'?'Nombre o tecnología…':'Name or technology…'} autocomplete="off"/></label><label><span>{locale==='es'?'Área':'Area'}</span><select id="area-filter"><option value="">{t.allAreas}</option>{Object.entries(areas).map(([key,value])=><option value={key}>{value[locale]}</option>)}</select></label><label><span>{t.tech}</span><select id="tech-filter"><option value="">{t.allTech}</option>{techs.map(tech=><option value={tech}>{tech}</option>)}</select></label></div>
+    <p class="index-count" id="index-count" role="status">16 {t.results}</p>
+    <ol class="index-list">{projects.map(p=><li data-index-item data-area={p.area} data-tech={JSON.stringify(p.technologies)} data-search={`${p[locale].title} ${p[locale].subtitle} ${p.technologies.join(' ')}`}><button data-index-go={p.order}><span class="index-order">{String(p.order).padStart(2,'0')}</span><span><strong>{p[locale].title}</strong><small>{p[locale].subtitle}</small></span><span class="index-area">{areas[p.area][locale]}</span><span aria-hidden="true">↗</span></button></li>)}</ol>
+    <div id="index-empty" hidden><p>{t.empty}</p><button class="text-link" id="clear-filters">{t.clear}</button></div>
+    <p class="index-keyboard">{t.keyboard}</p>
+  </dialog>
+  <dialog class="paper-dialog detail-dialog scroll-dialog" id="project-dialog" aria-labelledby="project-dialog-title">
+    <span class="dialog-roller top" aria-hidden="true"></span>
+    <div class="scroll-reader">
+      <div class="scroll-sheet" id="project-scroll-sheet" role="region" aria-labelledby="project-dialog-title">
+        <div class="dialog-top"><button class="text-link" id="copy-link">{t.copy} ↗</button><a class="text-link" id="detail-language" href={`/${locale==='es'?'en':'es'}/`}>{locale==='es'?'Read in English':'Leer en español'} ↗</a><button data-close autofocus aria-label={t.close}>×</button></div>
+        <div id="project-dialog-body"></div>
+      </div>
+      <ScrollReaderControl locale={locale} />
+    </div>
+    <span class="dialog-roller bottom" aria-hidden="true"></span>
+  </dialog>
+  <dialog class="paper-dialog credits-dialog" id="credits-dialog" aria-labelledby="credits-title"><div class="dialog-top"><span class="eyebrow">CODESENTRY / 桜</span><button data-close aria-label={t.close}>×</button></div><h2 id="credits-title">{t.creditsTitle}</h2><p>{t.creditsArt}</p><p>{t.creditsScreens}</p><p>{t.creditsAudio}</p><p><a href="https://opengameart.org/content/stream-sounds" target="_blank" rel="noopener noreferrer">Stream Sounds — kurt ↗</a> · <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener noreferrer">CC BY 3.0 ↗</a></p><p>{t.creditsFonts}</p><div class="detail-links">{['noto-serif-jp','manrope','ibm-plex-mono'].map(font=><a href={`/fonts/licenses/${font}.txt`} target="_blank" rel="noopener noreferrer">{font} ↗</a>)}</div></dialog>
+  <script>
+    import { initGarden } from '../lib/garden';
+    initGarden();
+  </script>
+</Base>
