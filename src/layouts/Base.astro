@@ -7,9 +7,13 @@ import '@fontsource/manrope/latin-600.css';
 import '@fontsource/ibm-plex-mono/latin-400.css';
 import type { Locale } from '../data/ui';
 import GardenLoader from '../components/GardenLoader.astro';
-interface Props { locale: Locale; title?: string; description?: string; garden?: boolean; }
-const {locale, garden = false, title = 'CodeSentry — ' + (Astro.props.locale === 'es' ? 'Software, en perspectiva' : 'Software, in perspective'), description = locale === 'es' ? 'Explora 16 productos, herramientas y sistemas de CodeSentry. Propósito, funciones y arquitectura en un jardín digital.' : 'Explore 16 CodeSentry products, tools and systems. Purpose, features and architecture in a digital garden.'} = Astro.props;
-const canonical = new URL(`/${locale}/`, Astro.site);
+interface Props { locale: Locale; title?: string; description?: string; garden?: boolean; canonicalPath?: string; }
+const {locale, garden = false, title = 'CodeSentry — ' + (Astro.props.locale === 'es' ? 'Software, en perspectiva' : 'Software, in perspective'), description = locale === 'es' ? 'Explora 16 productos, herramientas y sistemas de CodeSentry. Propósito, funciones y arquitectura en un jardín digital.' : 'Explore 16 CodeSentry products, tools and systems. Purpose, features and architecture in a digital garden.', canonicalPath} = Astro.props;
+const route = canonicalPath ?? '/' + locale + '/';
+const suffix = route.startsWith('/' + locale + '/') ? route.slice(locale.length + 2) : '';
+const canonical = new URL(route, Astro.site);
+const spanishRoute = new URL('/es/' + suffix, Astro.site);
+const englishRoute = new URL('/en/' + suffix, Astro.site);
 ---
 <!doctype html>
 <html lang={locale}>
@@ -35,9 +39,9 @@ const canonical = new URL(`/${locale}/`, Astro.site);
     <link rel="icon" type="image/svg+xml" href="/media/garden/mark.svg?v=2" />
     <link rel="apple-touch-icon" href="/media/garden/apple-touch-icon.png?v=2" />
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="es" href={new URL('/es/', Astro.site)} />
-    <link rel="alternate" hreflang="en" href={new URL('/en/', Astro.site)} />
-    <link rel="alternate" hreflang="x-default" href={new URL('/es/', Astro.site)} />
+    <link rel="alternate" hreflang="es" href={spanishRoute} />
+    <link rel="alternate" hreflang="en" href={englishRoute} />
+    <link rel="alternate" hreflang="x-default" href={spanishRoute} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />

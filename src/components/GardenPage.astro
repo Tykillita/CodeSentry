@@ -98,7 +98,7 @@ const sceneProjects=projects.map(p=>({slug:p.slug,order:p.order,title:p[locale].
           </article>;
         })}
         <section class="panel closing" id="enfoque" data-panel data-slug="">
-          <div class="closing-copy"><p class="eyebrow">{t.endEyebrow}</p><h2>{t.endA}<br/><em>{t.endB}</em></h2><p>{t.endIntro}</p><ul>{t.endPoints.map(p=><li>{p}</li>)}</ul><div class="hero-actions"><button class="paper-button" data-open="index-dialog">{t.indexCta} ↗</button><a class="text-link" href="#inicio" data-go="0">{t.return} ↑</a></div></div>
+          <div class="closing-copy"><p class="eyebrow">{t.endEyebrow}</p><h2>{t.endA}<br/><em>{t.endB}</em></h2><p>{t.endIntro}</p><ul>{t.endPoints.map(p=><li>{p}</li>)}</ul><div class="hero-actions"><button class="paper-button" data-open="index-dialog">{t.indexCta} ↗</button><button class="paper-button" data-open="policy-dialog">{t.securityPolicies}</button><a class="text-link" href="#inicio" data-go="0">{t.return} ↑</a></div></div>
           <span class="closing-seal" aria-hidden="true">桜</span>
           <footer><span>CodeSentry · {new Date().getFullYear()}</span><button class="text-link" data-open="credits-dialog">{t.credits}</button><noscript><a class="text-link" href="/media/credits.txt">{t.credits}</a></noscript></footer>
         </section>
@@ -152,6 +152,32 @@ const sceneProjects=projects.map(p=>({slug:p.slug,order:p.order,title:p[locale].
         <div id="project-dialog-body"></div>
       </div>
       <ScrollReaderControl locale={locale} />
+    </div>
+    <span class="dialog-roller bottom" aria-hidden="true"></span>
+  </dialog>
+  <dialog class="paper-dialog detail-dialog scroll-dialog policy-dialog" id="policy-dialog" aria-labelledby="policy-dialog-title" aria-describedby="policy-dialog-description">
+    <span class="dialog-roller top" aria-hidden="true"></span>
+    <div class="scroll-reader">
+      <div class="scroll-sheet" role="region" aria-labelledby="policy-dialog-title">
+        <div class="dialog-top"><span class="eyebrow">CODESENTRY / HIKARI</span><button data-close autofocus aria-label={t.close}>×</button></div>
+        <h2 id="policy-dialog-title">{t.securityPolicies}</h2>
+        <p class="policy-dialog-description" id="policy-dialog-description">{t.policySummary}</p>
+        <nav class="policy-dialog-links" aria-label={locale === 'es' ? 'Políticas de CodeSentry' : 'CodeSentry policies'}>
+          <a class="policy-icon-link" href={'/' + locale + '/privacy/'} aria-label={t.linkedinPrivacy} title={t.linkedinPrivacy}>
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M8 7.5h32v33H8z" />
+              <path d="M16 20v13M16 14.5v.2M23 33V20h6v2.2c1.1-1.7 2.5-2.5 4.5-2.5 3.4 0 5.5 2.2 5.5 6.6V33M23 25.3c0-3.3 2-5.6 5.4-5.6" />
+            </svg>
+          </a>
+          <a class="policy-icon-link" href={'/' + locale + '/security/'} aria-label={t.githubSecurity} title={t.githubSecurity}>
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m13 13 2-6 7 4a19 19 0 0 1 9 0l7-4 2 7a14 14 0 0 1 3 9c0 8-5 13-14 14v5H19v-5c-8-1-13-6-13-14 0-4 2-8 5-10Z" />
+              <path d="M15 23h.2M33 23h.2M17 32c2 2 4 3 7 3s5-1 7-3" />
+              <path d="M7 27c-4 0-5-3-5-6 0-1-1-3-2-4" />
+            </svg>
+          </a>
+        </nav>
+      </div>
     </div>
     <span class="dialog-roller bottom" aria-hidden="true"></span>
   </dialog>
