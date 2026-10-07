@@ -37,4 +37,11 @@ await mkdir(fonts, { recursive: true });
 for (const name of ['noto-serif-jp', 'manrope', 'ibm-plex-mono']) {
   await copyFile(resolve(root, `node_modules/@fontsource/${name}/LICENSE`), resolve(fonts, `${name}.txt`));
 }
-await sharp(resolve(root,'public/media/garden/social.svg')).png().toFile(resolve(root,'public/media/garden/social.png'));
+const socialBackground = resolve(root, 'tools/media/social-garden-background.webp');
+const socialOverlay = resolve(root, 'tools/media/social-overlay.svg');
+const socialImage = resolve(root, 'public/media/garden/social.png');
+await sharp(socialBackground)
+  .resize({ width: 1200, height: 630, fit: 'cover' })
+  .composite([{ input: await sharp(socialOverlay).png().toBuffer() }])
+  .png()
+  .toFile(socialImage);
