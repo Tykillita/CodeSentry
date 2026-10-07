@@ -191,7 +191,7 @@ html.studio .project-panel::before { background:linear-gradient(90deg,rgba(243,2
 .studio-exit[hidden] { display:none; }
 .studio-exit:hover { color:var(--red);border-color:rgba(217,92,52,.45);background:rgba(255,249,239,.92); }
 .studio-exit-mark { display:grid;place-items:center;width:26px;height:28px;background:var(--red);color:var(--ivory);font:400 15px 'Noto Serif JP','Yu Mincho',serif;border:2px double #FFF9EF66;transform:rotate(-2deg); }
-.studio-exit-arrow { font-size:13px;color:#876b54;transition:transform .2s; }
+.studio-exit-arrow { width:13px;height:13px;color:#876b54;transition:transform .2s; }
 .studio-exit:hover .studio-exit-arrow { transform:translateX(-3px);color:var(--red); }
 html.studio .main-nav { margin-inline:auto; }
 @media (max-width:899px), (pointer:coarse) { .site-header .studio-exit { margin-left:auto;height:34px;gap:7px;padding:0 10px 0 3px; } .site-header .studio-exit-label { display:none; } }
@@ -315,3 +315,10 @@ html.studio.scene-ready .project-panel[data-scroll-open] .project-copy>:nth-chil
 html.quiet .policy-icon-link { transition:none; }
 html.quiet .policy-dialog[open]::backdrop { animation:none; }
 @media (prefers-reduced-motion:reduce) { .policy-dialog[open]::backdrop { animation:none; } }
+
+/* Keep navigation arrows as fine ink strokes across browsers and device fonts. */
+.paper-button .arrow-icon { width:16px;height:16px; }
+.text-link .arrow-icon { width:14px;height:14px; }
+.hero-bottom .arrow-icon { width:10px;height:10px; }
+.index-open-icon { width:16px;height:16px; justify-self:end; }
+@media (max-width:600px) { .hero .paper-button .arrow-icon { width:14px;height:14px; } }

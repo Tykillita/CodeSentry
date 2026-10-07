@@ -1,5 +1,6 @@
 ---
 import PapyrusArrow from './PapyrusArrow.astro';
+import ArrowIcon from './ArrowIcon.astro';
 import StudioExitButton from './StudioExitButton.astro';
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
@@ -44,9 +45,9 @@ const sceneProjects=projects.map(p=>({slug:p.slug,order:p.order,title:p[locale].
                 <span class="papyrus-label">{t.explore}</span>
                 <PapyrusArrow id="papyrus-arrow" />
               </a>
-              <button class="text-link" data-open="index-dialog">{t.indexCta}<span aria-hidden="true">↗</span></button>
+              <button class="text-link" data-open="index-dialog">{t.indexCta}<ArrowIcon /></button>
             </div>
-            <noscript><details class="static-index"><summary>{t.index}</summary><ol>{projects.map(p=><li><a href={`#proyecto-${p.slug}`}>{p[locale].title} →</a></li>)}</ol></details></noscript>
+            <noscript><details class="static-index"><summary>{t.index}</summary><ol>{projects.map(p=><li><a href={`#proyecto-${p.slug}`}>{p[locale].title} <ArrowIcon direction="right" /></a></li>)}</ol></details></noscript>
             <p class="origin">{t.origin}</p>
           </div>
           <div class="studio-intro">
@@ -61,7 +62,7 @@ const sceneProjects=projects.map(p=>({slug:p.slug,order:p.order,title:p[locale].
             </div>
           </div>
           <div class="garden-inscription" aria-hidden="true"><span>桜</span><small>SAKURA<br/>CODESENTRY</small></div>
-          <div class="hero-bottom"><span class="scroll-instruction"><span class="desktop-hint">↓ {t.scroll}</span><span class="touch-hint">→ {t.swipe}</span></span><span>16 {t.results} <span aria-hidden="true">·</span> 4 {locale==='es'?'áreas':'areas'}</span></div>
+          <div class="hero-bottom"><span class="scroll-instruction"><span class="desktop-hint"><ArrowIcon direction="down" /> {t.scroll}</span><span class="touch-hint"><ArrowIcon direction="right" /> {t.swipe}</span></span><span>16 {t.results} <span aria-hidden="true">·</span> 4 {locale==='es'?'áreas':'areas'}</span></div>
         </section>
         {projects.map(p=> {
           const c=p[locale];
@@ -75,7 +76,7 @@ const sceneProjects=projects.map(p=>({slug:p.slug,order:p.order,title:p[locale].
                 <button class="paper-button project-paper-cta" data-detail={p.slug}>
                   <span class="project-paper-label">{t.detail}</span><ProjectSeal slug={p.slug} name={c.title} />
                 </button>
-                {p.links.slice(0,1).map(link=><a class="text-link" href={link.url} target="_blank" rel="noopener noreferrer">{t[link.type]} ↗</a>)}
+                {p.links.slice(0,1).map(link=><a class="text-link" href={link.url} target="_blank" rel="noopener noreferrer">{t[link.type]} <ArrowIcon /></a>)}
               </div>
               <p class="platform-label">{t.platform}<span>{p.platforms.join(' / ')}</span></p>
             </div>
@@ -87,7 +88,7 @@ const sceneProjects=projects.map(p=>({slug:p.slug,order:p.order,title:p[locale].
                     <span class="parchment-fallback-title">{c.title}</span>
                     <span class="parchment-fallback-art"><ProjectVisual visual={p.visual} flow={c.flow} variant="ink" uid={p.slug} /></span>
                     <span class="parchment-fallback-flow">{c.flow.map((step,i)=><span><i>{i+1}</i>{step}</span>)}</span>
-                    <span class="parchment-fallback-foot"><span class="parchment-fallback-cta">{t.detail} ↗</span><span class="parchment-fallback-seal">{areas[p.area].mark}</span></span>
+                    <span class="parchment-fallback-foot"><span class="parchment-fallback-cta">{t.detail} <ArrowIcon /></span><span class="parchment-fallback-seal">{areas[p.area].mark}</span></span>
                   </span>
                   <span class="visually-hidden">{t.detail}: {c.title}</span>
                 </button>
@@ -98,7 +99,7 @@ const sceneProjects=projects.map(p=>({slug:p.slug,order:p.order,title:p[locale].
           </article>;
         })}
         <section class="panel closing" id="enfoque" data-panel data-slug="">
-          <div class="closing-copy"><p class="eyebrow">{t.endEyebrow}</p><h2>{t.endA}<br/><em>{t.endB}</em></h2><p>{t.endIntro}</p><ul>{t.endPoints.map(p=><li>{p}</li>)}</ul><div class="hero-actions"><button class="paper-button" data-open="index-dialog">{t.indexCta} ↗</button><button class="paper-button" data-open="policy-dialog">{t.securityPolicies}</button><a class="text-link" href="#inicio" data-go="0">{t.return} ↑</a></div></div>
+          <div class="closing-copy"><p class="eyebrow">{t.endEyebrow}</p><h2>{t.endA}<br/><em>{t.endB}</em></h2><p>{t.endIntro}</p><ul>{t.endPoints.map(p=><li>{p}</li>)}</ul><div class="hero-actions"><button class="paper-button" data-open="index-dialog">{t.indexCta}<ArrowIcon /></button><button class="paper-button" data-open="policy-dialog">{t.securityPolicies}</button><a class="text-link" href="#inicio" data-go="0">{t.return}<ArrowIcon direction="up" /></a></div></div>
           <span class="closing-seal" aria-hidden="true">桜</span>
           <footer><span>CodeSentry · {new Date().getFullYear()}</span><button class="text-link" data-open="credits-dialog">{t.credits}</button><noscript><a class="text-link" href="/media/credits.txt">{t.credits}</a></noscript></footer>
         </section>
@@ -140,7 +141,7 @@ const sceneProjects=projects.map(p=>({slug:p.slug,order:p.order,title:p[locale].
     <h2 id="index-title">{t.index}</h2>
     <div class="index-filters"><label><span>{t.search}</span><input type="search" id="project-search" placeholder={locale==='es'?'Nombre o tecnología…':'Name or technology…'} autocomplete="off"/></label><label><span>{locale==='es'?'Área':'Area'}</span><select id="area-filter"><option value="">{t.allAreas}</option>{Object.entries(areas).map(([key,value])=><option value={key}>{value[locale]}</option>)}</select></label><label><span>{t.tech}</span><select id="tech-filter"><option value="">{t.allTech}</option>{techs.map(tech=><option value={tech}>{tech}</option>)}</select></label></div>
     <p class="index-count" id="index-count" role="status">16 {t.results}</p>
-    <ol class="index-list">{projects.map(p=><li data-index-item data-area={p.area} data-tech={JSON.stringify(p.technologies)} data-search={`${p[locale].title} ${p[locale].subtitle} ${p.technologies.join(' ')}`}><button data-index-go={p.order}><span class="index-order">{String(p.order).padStart(2,'0')}</span><span><strong>{p[locale].title}</strong><small>{p[locale].subtitle}</small></span><span class="index-area">{areas[p.area][locale]}</span><span aria-hidden="true">↗</span></button></li>)}</ol>
+    <ol class="index-list">{projects.map(p=><li data-index-item data-area={p.area} data-tech={JSON.stringify(p.technologies)} data-search={`${p[locale].title} ${p[locale].subtitle} ${p.technologies.join(' ')}`}><button data-index-go={p.order}><span class="index-order">{String(p.order).padStart(2,'0')}</span><span><strong>{p[locale].title}</strong><small>{p[locale].subtitle}</small></span><span class="index-area">{areas[p.area][locale]}</span><ArrowIcon class="index-open-icon" /></button></li>)}</ol>
     <div id="index-empty" hidden><p>{t.empty}</p><button class="text-link" id="clear-filters">{t.clear}</button></div>
     <p class="index-keyboard">{t.keyboard}</p>
   </dialog>
@@ -148,7 +149,7 @@ const sceneProjects=projects.map(p=>({slug:p.slug,order:p.order,title:p[locale].
     <span class="dialog-roller top" aria-hidden="true"></span>
     <div class="scroll-reader">
       <div class="scroll-sheet" id="project-scroll-sheet" role="region" aria-labelledby="project-dialog-title">
-        <div class="dialog-top"><button class="text-link" id="copy-link">{t.copy} ↗</button><a class="text-link" id="detail-language" href={`/${locale==='es'?'en':'es'}/`}>{locale==='es'?'Read in English':'Leer en español'} ↗</a><button data-close autofocus aria-label={t.close}>×</button></div>
+        <div class="dialog-top"><button class="text-link" id="copy-link">{t.copy}<ArrowIcon /></button><a class="text-link" id="detail-language" href={`/${locale==='es'?'en':'es'}/`}>{locale==='es'?'Read in English':'Leer en español'}<ArrowIcon /></a><button data-close autofocus aria-label={t.close}>×</button></div>
         <div id="project-dialog-body"></div>
       </div>
       <ScrollReaderControl locale={locale} />
@@ -178,7 +179,7 @@ const sceneProjects=projects.map(p=>({slug:p.slug,order:p.order,title:p[locale].
     </div>
     <span class="dialog-roller bottom" aria-hidden="true"></span>
   </dialog>
-  <dialog class="paper-dialog credits-dialog" id="credits-dialog" aria-labelledby="credits-title"><div class="dialog-top"><span class="eyebrow">CODESENTRY / 桜</span><button data-close aria-label={t.close}>×</button></div><h2 id="credits-title">{t.creditsTitle}</h2><p>{t.creditsArt}</p><p>{t.creditsScreens}</p><p>{t.creditsAudio}</p><p><a href="https://opengameart.org/content/stream-sounds" target="_blank" rel="noopener noreferrer">Stream Sounds — kurt ↗</a> · <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener noreferrer">CC BY 3.0 ↗</a></p><p>{t.creditsFonts}</p><div class="detail-links">{['noto-serif-jp','manrope','ibm-plex-mono'].map(font=><a href={`/fonts/licenses/${font}.txt`} target="_blank" rel="noopener noreferrer">{font} ↗</a>)}</div></dialog>
+  <dialog class="paper-dialog credits-dialog" id="credits-dialog" aria-labelledby="credits-title"><div class="dialog-top"><span class="eyebrow">CODESENTRY / 桜</span><button data-close aria-label={t.close}>×</button></div><h2 id="credits-title">{t.creditsTitle}</h2><p>{t.creditsArt}</p><p>{t.creditsScreens}</p><p>{t.creditsAudio}</p><p><a href="https://opengameart.org/content/stream-sounds" target="_blank" rel="noopener noreferrer">Stream Sounds — kurt <ArrowIcon /></a> · <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener noreferrer">CC BY 3.0 <ArrowIcon /></a></p><p>{t.creditsFonts}</p><div class="detail-links">{['noto-serif-jp','manrope','ibm-plex-mono'].map(font=><a href={`/fonts/licenses/${font}.txt`} target="_blank" rel="noopener noreferrer">{font} <ArrowIcon /></a>)}</div></dialog>
   <script>
     import { initGarden } from '../lib/garden';
     initGarden();

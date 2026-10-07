@@ -35,13 +35,13 @@ The garden brings a collection of software projects together in one place. Its c
 
 | | Feature | Details |
 |:-:|---|---|
-| 🌸 | **3D garden** | An original sakura scene introduces the catalogue and responds to scrolling. |
-| 🗂️ | **Project catalogue** | Illustrated cards lead to dedicated details, public project links, and a searchable index. |
-| 🌐 | **English and Spanish** | Localized pages are available at <code>/en/</code> and <code>/es/</code>; each project keeps its language-specific content. |
-| 🔗 | **Shareable navigation** | Project and catalogue locations can be opened and shared as direct links. |
-| 🎧 | **Optional sound** | Ambient garden audio is available as an opt-in part of the experience. |
-| ♿ | **Accessible alternatives** | Reduced-motion support, keyboard-friendly controls, HTML project details without JavaScript, and a CSS landscape if WebGL is unavailable. |
-| 🔒 | **Static and private by design** | The site has no account system, database, analytics, or application backend. |
+| ![Garden icon](public/media/garden/icons/garden.svg) | **3D garden** | An original sakura scene introduces the catalogue and responds to scrolling. |
+| ![Catalogue icon](public/media/garden/icons/catalogue.svg) | **Project catalogue** | Illustrated cards lead to dedicated details, public project links, and a searchable index. |
+| ![Language icon](public/media/garden/icons/language.svg) | **English and Spanish** | Localized pages are available at <code>/en/</code> and <code>/es/</code>; each project keeps its language-specific content. |
+| ![Sharing icon](public/media/garden/icons/sharing.svg) | **Shareable navigation** | Project and catalogue locations can be opened and shared as direct links. |
+| ![Sound icon](public/media/garden/icons/sound.svg) | **Optional sound** | Ambient garden audio is available as an opt-in part of the experience. |
+| ![Accessibility icon](public/media/garden/icons/accessibility.svg) | **Accessible alternatives** | Reduced-motion support, keyboard-friendly controls, HTML project details without JavaScript, and a CSS landscape if WebGL is unavailable. |
+| ![Privacy icon](public/media/garden/icons/privacy.svg) | **Static and private by design** | The site has no account system, database, analytics, or application backend. |
 
 ## Run locally
 

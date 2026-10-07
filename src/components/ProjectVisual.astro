@@ -6,7 +6,7 @@ const grid = `grid-${visual}-${uid}`;
 const graph = ['network','team','alert','route'].includes(visual);
 const paper = ['documents','quote','week','habits'].includes(visual);
 ---
-<svg class:list={['project-art', {'project-art-ink': ink}]} xmlns="http://www.w3.org/2000/svg" viewBox={ink ? '70 50 480 290' : '0 0 620 390'} role="img" aria-label={flow.join(' → ')} data-visual={visual}>
+<svg class:list={['project-art', {'project-art-ink': ink}]} xmlns="http://www.w3.org/2000/svg" viewBox={ink ? '70 50 480 290' : '0 0 620 390'} role="img" aria-label={flow.join('; ')} data-visual={visual}>
   {!ink && <>
     <defs><pattern id={grid} width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="currentColor" stroke-width=".4" opacity=".1"/></pattern></defs>
     <rect width="620" height="390" fill={`url(#${grid})`}/>

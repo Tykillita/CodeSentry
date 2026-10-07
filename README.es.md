@@ -36,13 +36,13 @@ El jardín reúne una colección de proyectos de software en un solo lugar. Su c
 
 | | Función | Detalles |
 |:-:|---|---|
-| 🌸 | **Jardín 3D** | Una escena original de sakura introduce el catálogo y responde al desplazamiento. |
-| 🗂️ | **Catálogo de proyectos** | Las tarjetas ilustradas llevan a páginas de detalle, enlaces públicos e índice filtrable. |
-| 🌐 | **Español e inglés** | Hay páginas localizadas en <code>/es/</code> y <code>/en/</code>; cada proyecto conserva su contenido por idioma. |
-| 🔗 | **Navegación compartible** | Las ubicaciones del catálogo y los proyectos se pueden abrir y compartir como enlaces directos. |
-| 🎧 | **Sonido opcional** | El ambiente sonoro del jardín es una opción que el visitante puede activar. |
-| ♿ | **Alternativas accesibles** | Compatibilidad con movimiento reducido, controles aptos para teclado, detalles HTML sin JavaScript y un paisaje CSS si WebGL no está disponible. |
-| 🔒 | **Sitio estático y privado** | El sitio no tiene cuentas, base de datos, analítica ni backend de aplicación. |
+| ![Icono del jardín](public/media/garden/icons/garden.svg) | **Jardín 3D** | Una escena original de sakura introduce el catálogo y responde al desplazamiento. |
+| ![Icono del catálogo](public/media/garden/icons/catalogue.svg) | **Catálogo de proyectos** | Las tarjetas ilustradas llevan a páginas de detalle, enlaces públicos e índice filtrable. |
+| ![Icono de idioma](public/media/garden/icons/language.svg) | **Español e inglés** | Hay páginas localizadas en <code>/es/</code> y <code>/en/</code>; cada proyecto conserva su contenido por idioma. |
+| ![Icono de enlaces](public/media/garden/icons/sharing.svg) | **Navegación compartible** | Las ubicaciones del catálogo y los proyectos se pueden abrir y compartir como enlaces directos. |
+| ![Icono de sonido](public/media/garden/icons/sound.svg) | **Sonido opcional** | El ambiente sonoro del jardín es una opción que el visitante puede activar. |
+| ![Icono de accesibilidad](public/media/garden/icons/accessibility.svg) | **Alternativas accesibles** | Compatibilidad con movimiento reducido, controles aptos para teclado, detalles HTML sin JavaScript y un paisaje CSS si WebGL no está disponible. |
+| ![Icono de privacidad](public/media/garden/icons/privacy.svg) | **Sitio estático y privado** | El sitio no tiene cuentas, base de datos, analítica ni backend de aplicación. |
 
 ## Ejecutar localmente
 

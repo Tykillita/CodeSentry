@@ -1,9 +1,10 @@
 ---
+import ArrowIcon from './ArrowIcon.astro';
 interface Props { label:string; id?:string; hidden?:boolean; }
 const {label,id,hidden=false}=Astro.props;
 ---
 <button class="studio-exit" id={id} data-studio-exit hidden={hidden} aria-label={label} title={label}>
   <span class="studio-exit-mark" aria-hidden="true">庭</span>
-  <span class="studio-exit-arrow" aria-hidden="true">←</span>
+  <ArrowIcon direction="left" class="studio-exit-arrow" />
   <span class="studio-exit-label">{label}</span>
 </button>
