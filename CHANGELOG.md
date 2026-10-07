@@ -12,4 +12,4 @@ Notable changes to CodeSentry. The site is continuously deployed from main; SemV
 
 ### Visuals / Recursos visuales
 
-- Reworked the social card with a detailed, realistic garden scene. / Se renovó la tarjeta social con una escena detallada y realista del jardín.\n
+- Reworked the social card with a detailed, realistic garden scene. / Se renovó la tarjeta social con una escena detallada y realista del jardín.
