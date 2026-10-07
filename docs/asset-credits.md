@@ -40,6 +40,10 @@ Las capturas seleccionadas no muestran expedientes, clientes identificados, cred
 
 El sakura 3D, su corteza procedural y sus flores son geometría original de esta web. No se distribuye una ilustración estática alternativa del árbol. No utiliza modelos ni texturas externos.
 
+The social card (`social.png`) reinterprets this scene with photorealistic-style artwork. Its master background and vector type overlay are kept in `tools/media/social-garden-background.webp` and `tools/media/social-overlay.svg`; `tools/prepare-media.mjs` composites them into the public asset.
+
+La tarjeta social (`social.png`) reinterpreta esta escena con una imagen de estilo fotorrealista. El fondo maestro y la capa tipográfica vectorial se conservan en `tools/media/social-garden-background.webp` y `tools/media/social-overlay.svg`; `tools/prepare-media.mjs` los compone para producir el recurso público.
+
 El jardín 3D de `garden-environment.ts` también usa geometría original: montañas, luna, suelo de arena, piedras, hierbas, casa de un solo techo y farol. Comparte la cámara del sakura para producir perspectiva y paralaje durante el recorrido.
 
 ## Decoraciones del estudio

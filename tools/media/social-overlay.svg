@@ -1,8 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#F3E9D6"/>
-  <circle cx="944" cy="277" r="190" fill="#FFF9EF"/>
-  <path d="M856 630Q807 449 911 311T1085 142M874 468Q826 300 702 258M911 310 1036 321" fill="none" stroke="#5C5146" stroke-width="18"/>
-  <g fill="#E8B8B1"><circle cx="715" cy="254" r="46"/><circle cx="769" cy="296" r="49"/><circle cx="881" cy="272" r="50"/><circle cx="982" cy="225" r="62"/><circle cx="1055" cy="170" r="46"/><circle cx="1031" cy="322" r="39"/></g>
+  <defs>
+    <linearGradient id="copy-veil" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#F3E9D6"/>
+      <stop offset="67%" stop-color="#F3E9D6"/>
+      <stop offset="100%" stop-color="#F3E9D6" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="850" height="630" fill="url(#copy-veil)"/>
   <g transform="rotate(-2 90 87)">
     <rect x="65" y="62" width="50" height="50" fill="#D95C34"/>
     <rect x="69" y="66" width="42" height="42" fill="none" stroke="#FFF9EF" stroke-opacity=".72" stroke-width="1.5"/>
