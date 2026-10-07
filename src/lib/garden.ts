@@ -33,9 +33,8 @@ export function initGarden() {
   const rollers=[...projectDialog.querySelectorAll<HTMLElement>('.dialog-roller')];
   const paperPhysics=createParchmentPhysics({dialog:projectDialog,reader,sheet,rollers,isQuiet:()=>journey.quiet,geometry:value=>readingControl?.setPaperMotion(value)});
   const toast=document.querySelector<HTMLElement>('#status-toast')!;
-  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
   const desktop=window.matchMedia('(min-width: 900px) and (pointer: fine)');
-  let preference:boolean|undefined;
+  let preference=false;
   try {const saved=localStorage.getItem('codesentry:motion:v1');if(saved==='quiet'||saved==='animated')preference=saved==='quiet';} catch { /* Storage can be disabled. */ }
   let active=0, distance=0, offsets:number[]=[]; let tween:gsap.core.Tween|undefined,travelTween:gsap.core.Tween|undefined,entryTween:gsap.core.Timeline|undefined;let initialized=false,halo='';
   let entryNodes:HTMLElement[]=[],entryFrom=0,entryTo=1,entryProgress=0,entryTargetProgress=0,entryTickerActive=false;
@@ -195,7 +194,7 @@ export function initGarden() {
     if(dialogs.some(dialog=>dialog.open)){lockedY=window.scrollY;lockedX=viewport.scrollLeft;tween?.scrollTrigger?.disable(false);}
   }
   function applyMotion() {
-    const quiet=preference??reduce.matches;
+    const quiet=preference;
     document.documentElement.classList.toggle('quiet',quiet);
     setMeta({quiet});
     motion.setAttribute('aria-pressed',String(quiet));motion.setAttribute('aria-label',quiet?t.animated:t.calm);
@@ -211,7 +210,7 @@ export function initGarden() {
     // Remember the selected project before that event and restore it once, next frame.
     resizePanel??=active;cancelAnimationFrame(rebuildFrame);rebuildFrame=requestAnimationFrame(rebuild);
   }
-  reduce.addEventListener('change',applyMotion);desktop.addEventListener('change',scheduleRebuild);
+  desktop.addEventListener('change',scheduleRebuild);
   window.addEventListener('resize',scheduleRebuild);
   document.fonts.ready.then(()=>{
     rebuild();
