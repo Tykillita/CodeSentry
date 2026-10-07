@@ -17,7 +17,7 @@
 
 <br>
 
-<a href="https://gocodesentry.web.app"><img src="public/media/garden/social.png" width="720" alt="CodeSentry digital garden social card"></a>
+<a href="https://gocodesentry.web.app"><img src="public/media/garden/social.png?v=3" width="720" alt="CodeSentry digital garden social card"></a>
 
 <p><a href="https://gocodesentry.web.app">Open the garden</a> &bull; <a href="#features">Features</a> &bull; <a href="#run-locally">Run locally</a> &bull; <a href="#privacy-and-accessibility">Privacy and accessibility</a> &bull; <a href="#versioning-and-pull-requests">Versioning</a> &bull; <a href="SECURITY.md">Security policy</a></p>
 
